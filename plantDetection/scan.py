@@ -1,7 +1,6 @@
 import requestAPIplantID as api
 from time import gmtime, strftime
 
-
 class Scan():
     def __init__(self, imagePfad):
         self.imagePfad = imagePfad

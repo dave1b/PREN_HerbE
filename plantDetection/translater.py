@@ -16,7 +16,4 @@ def translateFromENtoDE(text):
     response = requests.request("GET", url, headers=headers, params=querystring)
     return response.text
     
-
-    
-
 print(translateFromENtoDE("My english is good!"))
