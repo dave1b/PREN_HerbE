@@ -1,0 +1,276 @@
+{
+    "id": 29600623,
+    "custom_id": None,
+    "meta_data": {
+        "latitude": None,
+        "longitude": None,
+        "date": "2021-09-29",
+        "datetime": "2021-09-29"
+    },
+    "uploaded_datetime": 1632940034.204135,
+    "finished_datetime": 1632940035.177752,
+    "images": [
+        {
+            "file_name": "69936528302c4cefac9cc9c9d5e19e82.jpg",
+            "url": "https: //plant.id/media/images/69936528302c4cefac9cc9c9d5e19e82.jpg"
+        }
+    ],
+    "suggestions": [
+        {
+            "id": 188176711,
+            "plant_name": "Mentha",
+            "plant_details": {
+                "common_names": [
+                    "mint",
+                    "menta"
+                ],
+                "url": "https://en.wikipedia.org/wiki/Mentha",
+                "wiki_description": {
+                    "value": "Mentha (also known as mint, from Greek μίνθα míntha, Linear B mi-ta) is a genus of plants in the family Lamiaceae (mint family). The exact distinction between species is unclear; it is estimated that 13 to 24 species exist. Hybridization occurs naturally where some species range overlap. Many hybrids and cultivars are known.\nThe genus has a subcosmopolitan distribution across Europe, Africa, Asia, Australia, and North America.\nThe species that makes up the genus Mentha are widely distributed and can be found in many environments. Most grow best in wet environments and moist soils. Mints will grow 10–120 cm (4-48 inches) tall and can spread over an indeterminate area. Due to their tendency to spread unchecked, some mints are considered invasive.",
+                    "citation": "https://en.wikipedia.org/wiki/Mentha",
+                    "license_name": "CC BY-SA 3.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                },
+                "taxonomy": {
+                    "class": "Magnoliopsida",
+                    "family": "Lamiaceae",
+                    "genus": "Mentha",
+                    "kingdom": "Plantae",
+                    "order": "Lamiales",
+                    "phylum": "Magnoliophyta"
+                },
+                "scientific_name": "Mentha",
+                "structured_name": {
+                    "genus": "mentha"
+                }
+            },
+            "probability": 0.6071944215576076,
+            "confirmed": False,
+            "similar_images": [
+                {
+                    "id": "8f34199e4bbecc53f4d02e4817ac3508",
+                    "similarity": 0.8478394525214503,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/8f3/4199e4bbecc53f4d02e4817ac3508.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/8f3/4199e4bbecc53f4d02e4817ac3508.small.jpg"
+                },
+                {
+                    "id": "4d6a3ae702af1d2cf8658888532f149a",
+                    "similarity": 0.8047366950490527,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/4d6/a3ae702af1d2cf8658888532f149a.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/4d6/a3ae702af1d2cf8658888532f149a.small.jpg"
+                }
+            ]
+        },
+        {
+            "id": 188176712,
+            "plant_name": "Mentha spicata",
+            "plant_details": {
+                "common_names": [
+                    "spearmint",
+                    "garden mint",
+                    "common mint",
+                    "lamb mint",
+                    "mackerel mint"
+                ],
+                "url": "https://en.wikipedia.org/wiki/Mentha_spicata",
+                "wiki_description": {
+                    "value": "Spearmint, also known as garden mint, common mint, lamb mint and mackerel mint, is a species of mint, Mentha spicata, native to Europe and southern temperate Asia, extending from Ireland in the west to southern China in the east. It is naturalized in many other temperate parts of the world, including northern and southern Africa, North America and South America. It is used as a flavouring in food and herbal teas. The aromatic oil, called oil of spearmint, is also used as a flavouring and sometimes as a scent.\nThe species and its subspecies have many synonyms, including Mentha crispa, Mentha crispata and Mentha viridis.",
+                    "citation": "https://en.wikipedia.org/wiki/Mentha_spicata",
+                    "license_name": "CC BY-SA 3.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                },
+                "taxonomy": {
+                    "class": "Magnoliopsida",
+                    "family": "Lamiaceae",
+                    "genus": "Mentha",
+                    "kingdom": "Plantae",
+                    "order": "Lamiales",
+                    "phylum": "Magnoliophyta"
+                },
+                "scientific_name": "Mentha spicata",
+                "structured_name": {
+                    "genus": "mentha",
+                    "species": "spicata"
+                }
+            },
+            "probability": 0.21948586392605907,
+            "confirmed": False,
+            "similar_images": [
+                {
+                    "id": "b998b8c877ee82aa14494a4e8de5dc0f",
+                    "similarity": 0.8418200654201227,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/b99/8b8c877ee82aa14494a4e8de5dc0f.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/b99/8b8c877ee82aa14494a4e8de5dc0f.small.jpg"
+                },
+                {
+                    "id": "078fd0e65a13992608d5fe488e8a24ca",
+                    "similarity": 0.6913794440000922,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/078/fd0e65a13992608d5fe488e8a24ca.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/078/fd0e65a13992608d5fe488e8a24ca.small.jpg",
+                    "citation": "Erin Niemela",
+                    "license_name": "CC BY-SA 4.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                }
+            ]
+        },
+        {
+            "id": 188176713,
+            "plant_name": "Mentha × piperita",
+            "plant_details": {
+                "common_names": [
+                    "peppermint"
+                ],
+                "url": "https://en.wikipedia.org/wiki/Mentha_×_piperita",
+                "wiki_description": {
+                    "value": "Peppermint (Mentha × piperita, also known as Mentha balsamea Wild) is a hybrid mint, a cross between watermint and spearmint. Indigenous to Europe and the Middle East, the plant is now widely spread and cultivated in many regions of the world. It is occasionally found in the wild with its parent species.\nAlthough the genus Mentha comprises more than 25 species, the one in most common use is peppermint. While Western peppermint is derived from Mentha piperita, Chinese peppermint, or “Bohe” is derived from the fresh leaves of Mentha haplocalyx. Mentha piperita and Mentha haplocalyx are both recognized as plant sources of menthol and menthone and are among the oldest herbs used for both culinary and medicinal products.",
+                    "citation": "https://en.wikipedia.org/wiki/Mentha_×_piperita",
+                    "license_name": "CC BY-SA 3.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                },
+                "taxonomy": {
+                    "class": "Magnoliopsida",
+                    "family": "Lamiaceae",
+                    "genus": "Mentha",
+                    "kingdom": "Plantae",
+                    "order": "Lamiales",
+                    "phylum": "Magnoliophyta"
+                },
+                "scientific_name": "Mentha × piperita",
+                "structured_name": {
+                    "genus": "mentha",
+                    "hybrid": "piperita"
+                }
+            },
+            "probability": 0.06281066508680785,
+            "confirmed": False,
+            "similar_images": [
+                {
+                    "id": "81adf10131f67e6086783cb200447100",
+                    "similarity": 0.7894957597566197,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/81a/df10131f67e6086783cb200447100.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/81a/df10131f67e6086783cb200447100.small.jpg"
+                },
+                {
+                    "id": "295eb828356a8a3ef9bdc8ae8c79fd10",
+                    "similarity": 0.7656594089074353,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/295/eb828356a8a3ef9bdc8ae8c79fd10.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/295/eb828356a8a3ef9bdc8ae8c79fd10.small.jpg",
+                    "citation": "ann verhelst",
+                    "license_name": "CC BY-SA 4.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                }
+            ]
+        },
+        {
+            "id": 188176714,
+            "plant_name": "Mentha longifolia",
+            "plant_details": {
+                "common_names": [
+                    "horse mint"
+                ],
+                "url": "https://en.wikipedia.org/wiki/Mentha_longifolia",
+                "wiki_description": {
+                    "value": "Mentha longifolia (horse mint; syn. M. spicata var. longifolia L., M. sylvestris L., M. tomentosa D\"Urv, M. incana Willd.) is a species in the genus Mentha (mint) native to Europe excluding Britain and Ireland, western and central Asia (east to Nepal and the far west of China), and northern and southern (but not tropical) Africa. It is a very variable herbaceous perennial plant with a peppermint-scented aroma. Like many mints, it has a creeping rhizome, with erect to creeping stems 40–120 cm tall. The leaves are oblong-elliptical to lanceolate, 5–10 cm long and 1.5–3 cm broad, thinly to densely tomentose, green to greyish-green above and white below. The flowers are 3–5 mm long, lilac, purplish, or white, produced in dense clusters (verticillasters) on tall, branched, tapering spikes; flowering in mid to late summer. It spreads via rhizomes to form clonal colonies.\nNicholas Culpeper\"s Complete Herbal (1653) states that "It is good for wind and colic in the stomach...The juice, laid on warm, helps the King\"s evil or kernels in the throat...The decoction or distilled water helps a stinking breath, proceeding from corruption of the teeth, and snuffed up the nose, purges the head. It helps the scurf or dandruff of the head used with vinegar.",
+                    "citation": "https: //en.wikipedia.org/wiki/Mentha_longifolia",
+                    "license_name": "CC BY-SA 3.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                },
+                "taxonomy": {
+                    "class": "Magnoliopsida",
+                    "family": "Lamiaceae",
+                    "genus": "Mentha",
+                    "kingdom": "Plantae",
+                    "order": "Lamiales",
+                    "phylum": "Magnoliophyta"
+                },
+                "scientific_name": "Mentha longifolia",
+                "structured_name": {
+                    "genus": "mentha",
+                    "species": "longifolia"
+                }
+            },
+            "probability": 0.021014138315800297,
+            "confirmed": False,
+            "similar_images": [
+                {
+                    "id": "876104b55978f8f20aac4176e39ab757",
+                    "similarity": 0.6186895265840784,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/876/104b55978f8f20aac4176e39ab757.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/876/104b55978f8f20aac4176e39ab757.small.jpg",
+                    "citation": "Clara Maillard",
+                    "license_name": "CC BY-SA 4.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                },
+                {
+                    "id": "43ae085f2a1c75acfa43dabec4f8882b",
+                    "similarity": 0.5686232244056764,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/43a/e085f2a1c75acfa43dabec4f8882b.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/43a/e085f2a1c75acfa43dabec4f8882b.small.jpg",
+                    "citation": "Guillaume Legendre",
+                    "license_name": "CC BY-SA 4.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                }
+            ]
+        },
+        {
+            "id": 188176715,
+            "plant_name": "Mentha aquatica",
+            "plant_details": {
+                "common_names": [
+                    "Water mint"
+                ],
+                "url": "https://en.wikipedia.org/wiki/Mentha_aquatica",
+                "wiki_description": {
+                    "value": "Mentha aquatica (water mint; syn. Mentha hirsuta Huds.) is a perennial flowering plant in the mint family Lamiaceae. It grows in moist places and is native to much of Europe, northwest Africa and southwest Asia.",
+                    "citation": "https://en.wikipedia.org/wiki/Mentha_aquatica",
+                    "license_name": "CC BY-SA 3.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/"
+                },
+                "taxonomy": {
+                    "class": "Magnoliopsida",
+                    "family": "Lamiaceae",
+                    "genus": "Mentha",
+                    "kingdom": "Plantae",
+                    "order": "Lamiales",
+                    "phylum": "Magnoliophyta"
+                },
+                "scientific_name": "Mentha aquatica",
+                "structured_name": {
+                    "genus": "mentha",
+                    "species": "aquatica"
+                }
+            },
+            "probability": 0.010121909196253836,
+            "confirmed": False,
+            "similar_images": [
+                {
+                    "id": "6dc5be69689f646892bb04b50e64c18a",
+                    "similarity": 0.7010362975379608,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/6dc/5be69689f646892bb04b50e64c18a.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/6dc/5be69689f646892bb04b50e64c18a.small.jpg",
+                    "citation": "Diego Alex",
+                    "license_name": "CC BY-SA 4.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                },
+                {
+                    "id": "7f9b3e4518e298f4f0f384d6e193fa67",
+                    "similarity": 0.6853001974453243,
+                    "url": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/7f9/b3e4518e298f4f0f384d6e193fa67.jpg",
+                    "url_small": "https://plant-id.ams3.cdn.digitaloceanspaces.com/similar_images/20210721.efnB4/images/7f9/b3e4518e298f4f0f384d6e193fa67.small.jpg",
+                    "citation": "gea holman",
+                    "license_name": "CC BY-SA 4.0",
+                    "license_url": "https://creativecommons.org/licenses/by-sa/4.0/"
+                }
+            ]
+        }
+    ],
+    "modifiers": [
+        "similar_images"
+    ],
+    "secret": "xUcRS5RupX2HYX9",
+    "fail_cause": None,
+    "countable": True,
+    "feedback": None,
+    "is_plant_probability": 0.9970676300000001,
+    "is_plant": True
+}
