@@ -7,15 +7,15 @@ photo1 = "./plantDetection/photos/minth1.jpg"
 photo2 = "./plantDetection/photos/minth2.jpg"
 
 firstScanReady = input("Erstes Pflanze gescannt?")
-scanOnTheRoad = Scan(photo1)
+ScanOfFirstPhoto = Scan(photo1)
 
 secondScanReady = input("Zweite Pflanze gescannt?")
-scanAtEnd1 = Scan(photo2)
+ScanOfSecondPhoto = Scan(photo2)
 
 for i in range(0,2):
     print("comparing both photos...")
     time.sleep(0.5)
 
-print("Has found a match: ", hasMatchingPlantInScan(scanOnTheRoad.possiblePlantsList,scanAtEnd1.possiblePlantsList))
-print("Found match: ", findFirstMatchingPlantInScan(scanOnTheRoad.possiblePlantsList, scanAtEnd1.possiblePlantsList))
+print("Has found a match: ", hasMatchingPlantInScan(ScanOfFirstPhoto.possiblePlantsList,ScanOfSecondPhoto.possiblePlantsList))
+print("Found match: ", findFirstMatchingPlantInScan(ScanOfFirstPhoto.possiblePlantsList, ScanOfSecondPhoto.possiblePlantsList))
 #print(findMatchingPlantInScan(scanOnTheRoad.possiblePlantsList, scanAtEnd1.possiblePlantsList))
