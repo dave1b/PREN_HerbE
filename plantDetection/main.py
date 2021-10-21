@@ -8,11 +8,14 @@ def main():
     photo1 = "./plantDetection/photos/minth1.jpg"
     photo2 = "./plantDetection/photos/minth2.jpg"
 
+    photo1_1 = "./plantDetection/photos/rose1.jpg"
+    photo1_2 = "./plantDetection/photos/rose2.jpg"
+
     firstScanReady = input("Erstes Pflanze gescannt?")
-    ScanOfFirstPhoto = Scan(photo1)
+    ScanOfFirstPhoto = Scan(photo1_1)
 
     secondScanReady = input("Zweite Pflanze gescannt?")
-    ScanOfSecondPhoto = Scan(photo2)
+    ScanOfSecondPhoto = Scan(photo1_2)
 
     for i in range(0,3):
         print("comparing both photos...")
