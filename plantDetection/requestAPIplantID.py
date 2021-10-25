@@ -10,7 +10,7 @@ def scan(imagePfad):
     params = {
         "images": image,
         "modifiers": ["crops_medium"],
-        "plant_language": "de",
+        "plant_language": "en", # de not supported 
         "plant_details": ["common_names"]
     }
     response = requests.post(
