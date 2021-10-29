@@ -8,8 +8,8 @@ def main():
     photo1 = "./photos/minth1.jpg"
     photo2 = "./photos/minth2.jpg"
 
-    photo1_1 = "./plantDetection/photos/rose1.jpg"
-    photo1_2 = "./plantDetection/photos/rose2.jpg"
+    photo1_1 = "./photos/rose1.jpg"
+    photo1_2 = "./photos/rose2.jpg"
 
     firstScanReady = input("Erstes Pflanze gescannt?")
     ScanOfFirstPhoto = Scan(photo1_1)
