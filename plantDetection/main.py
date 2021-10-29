@@ -5,8 +5,8 @@ from compareTwoScans import hasMatchingPlantInScan, findMatchingPlantInScan, fin
 def main():
 
     # Demonstration of functionality
-    photo1 = "./plantDetection/photos/minth1.jpg"
-    photo2 = "./plantDetection/photos/minth2.jpg"
+    photo1 = "./photos/minth1.jpg"
+    photo2 = "./photos/minth2.jpg"
 
     photo1_1 = "./plantDetection/photos/rose1.jpg"
     photo1_2 = "./plantDetection/photos/rose2.jpg"
