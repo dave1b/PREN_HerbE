@@ -8,6 +8,7 @@ buzzer = Buzzer(26)
 
 cap = cv2.VideoCapture(0)
 detector = cv2.QRCodeDetector()
+cap.
 
 def sw1Pressed():
     global sw1Press
