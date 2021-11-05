@@ -18,7 +18,7 @@ width=720
 brightness=0
 
 #Get camerainput and QR-Decoder
-cap = cv2.capeoCapture(0)
+cap = cv2.VideoCapture(0)
 detector = cv2.QRCodeDetector()
 
 
