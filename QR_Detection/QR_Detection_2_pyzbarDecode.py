@@ -20,18 +20,17 @@ class VideoStreamScanner:
         #self.cap.set(cv2.CAP_PROP_FPS, fps)
         self.cap.set(3,640)
         self.cap.set(4,480)
+        self.isRunning = False
         
-
     def startCapturingFrames(self):   
+        self.isRunning = True
         executor = ThreadPoolExecutor(max_workers=5)    
-        while (True):
+        while (self.isRunning):
             print("capture frame at " + str(datetime.now()))
             _, frame = self.cap.read()
             #cv2.imshow(frame)
             executor.submit(self.searchFrameForQR(frame))
-               
 
-    
         #function for searching QR-Code in Frame
     def searchFrameForQR(self, frame):
         decodedObjects = pyzbar.decode(frame)
@@ -40,11 +39,10 @@ class VideoStreamScanner:
             print('Type : ', obj.type)
             print('Data : ', obj.data,'\n')  
         decodedObjects = ""
-         
+    
+    def stop(self):
+        self.stopped = True
 
-
-        
-   
 def main():
     vsc = VideoStreamScanner(contrast = 20,exposure = 40)
     print("program started")
