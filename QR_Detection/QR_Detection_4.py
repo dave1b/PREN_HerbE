@@ -1,4 +1,4 @@
-from gpiozero import LED, Button, Buzzer
+
 import cv2
 import re
 import asyncio
@@ -33,7 +33,7 @@ async def decode(frame):
     for obj in decodedObjects:
         print('Type : ', obj.type)
         print('Data : ', obj.data,'\n')     
-    decodedObjects
+    return decodedObjects
 
 
 def main():
