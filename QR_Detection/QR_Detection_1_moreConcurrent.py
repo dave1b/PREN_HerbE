@@ -27,17 +27,18 @@ def getAndIncrementQRcounter(i):
     return i
 
 #function for capturing Frame
-async def captureFrame(i, queue):
+async def captureFrame(vsc):
     #checking if queue is not full
-    if not queue.full():
-        _, frame = cap.read()
-        asyncio.run(searchFrameForQR(frame,i,queue))
+    if not vsc.queue.full():
+        _, frame = vsc.cap.read()
+        asyncio.run(searchFrameForQR(frame,vsc.queue))
+        
 
 
 #function for searching QR-Code in Frame
-async def searchFrameForQR(frame,i, queue):
-    if queue.qsize() > 0:
-        data, bbox, _ = detector.detectAndDecode(frame)
+async def searchFrameForQR(frame,vsc):
+    if vsc.queue.qsize() > 0:
+        data, bbox, _ = vsc.detector.detectAndDecode(frame)
         if len(data)>1:
         #if bbox is not None:
             #buzzer.beep(0.1, 0.1, 1)
@@ -50,7 +51,9 @@ async def searchFrameForQR(frame,i, queue):
     
 
 class VideoStreamScanner:
-    def __init__(self):
+    def __init__(self, contrast, exposure, fps):
+        self.MAX_QUEUE_SIZE = 128
+        self.QRCounter = 0
         self.detector = cv2.QRCodeDetector()
         self.cap = cv2.VideoCapture(0)
         # Kameraeinstellungen setzten
@@ -58,32 +61,24 @@ class VideoStreamScanner:
         self.cap.set(cv2.CAP_PROP_EXPOSURE, exposure)
         self.cap.set(cv2.CAP_PROP_FPS, fps)
         self.cap.set(3,1280)
-        sel.fcap.set(4,1024)
+        self.cap.set(4,1024)
+        self.queue = Queue(maxsize = self.MAX_QUEUE_SIZE)
 
 
 def main():
-    MAX_QUEUE_SIZE = 128
-
+    vsc = VideoStreamScanner(contrast = 20,exposure = -8, fps = 60)
     print("program started")
-    #Get camerainput and QR-Decoder
-    global i
-    i = 0
-    queue = Queue(maxsize=MAX_QUEUE_SIZE)
-    
-
-    
-    
     while (True):
-        captureFrame(i, queue)
+        asyncio.run(captureFrame(vsc))
 #       print("camera open")
         
         #cv2.imshow("code detector", frame)
         if ord("q"):
-            cap.read()
+            vsc.cap.read()
             cv2.destroyAllWindows()
-            print("camera destoryed")
+            print("camera destroyed")
             break
-    cap.release()
+    vsc.cap.release()
     cv2.destroyAllWindows()
 
 
