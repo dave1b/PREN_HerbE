@@ -1,6 +1,6 @@
 from gpiozero import LED, Button, Buzzer
 import cv2
-import re
+import pyzbar.pyzbar as pyzbar
 import asyncio
 from datetime import datetime
 
@@ -18,10 +18,13 @@ detector = cv2.QRCodeDetector()
 
 
 async def searchInFrameForQR(frame):
-    data, bbox, _ = detector.detectAndDecode(frame)
-    if len(data)>1:
-        print("Data found: " + data)             
-        data = ""      
+    decodedObjects = pyzbar.decode(frame)
+        # Print results
+    for obj in decodedObjects:
+        print('Type : ', obj.type)
+        print('Data : ', obj.data,'\n')  
+        decodedObjects = ""     
+
 
 
 def main():
