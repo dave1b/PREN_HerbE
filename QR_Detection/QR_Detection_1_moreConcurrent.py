@@ -4,6 +4,8 @@ from queue import Queue
 import cv2
 import re
 import asyncio
+from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 
 
 
@@ -22,17 +24,22 @@ brightness=0
 # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
 
-def getAndIncrementQRcounter(i):
-    i += 1
-    return i
+
 
 #function for capturing Frame
 async def captureFrame(vsc):
     #checking if queue is not full
-    if not vsc.queue.full():
+    
+    #if not vsc.queue.full():
+        print("capture frame at " + str(datetime.now()))
         _, frame = vsc.cap.read()
-        asyncio.run(searchFrameForQR(frame,vsc.queue))
-        
+        #asyncio.run(searchFrameForQR(frame,vsc.queue))
+        data, bbox, _ = vsc.detector.detectAndDecode(frame)
+        if len(data)>1:
+            #if bbox is not None:
+                #buzzer.beep(0.1, 0.1, 1)            
+            print( " Data found: " + data)             
+            data = ""     
 
 
 #function for searching QR-Code in Frame
@@ -42,7 +49,7 @@ async def searchFrameForQR(frame,vsc):
         if len(data)>1:
         #if bbox is not None:
             #buzzer.beep(0.1, 0.1, 1)
-            print(str(getAndIncrementQRcounter()) + " Data found: " + data)             
+            print(" Data found: " + data)             
             data = ""     
             #for i in range(len(bbox)):
             #cv2.line(frame, tuple(bbox[i][0]), tuple(bbox[(i+1) % len(bbox)][0]), color=(255, 0, 0), thickness=2)
@@ -53,7 +60,6 @@ async def searchFrameForQR(frame,vsc):
 class VideoStreamScanner:
     def __init__(self, contrast, exposure, fps):
         self.MAX_QUEUE_SIZE = 128
-        self.QRCounter = 0
         self.detector = cv2.QRCodeDetector()
         self.cap = cv2.VideoCapture(0)
         # Kameraeinstellungen setzten
@@ -63,6 +69,7 @@ class VideoStreamScanner:
         self.cap.set(3,1280)
         self.cap.set(4,1024)
         self.queue = Queue(maxsize = self.MAX_QUEUE_SIZE)
+        
 
 
 def main():
@@ -73,13 +80,13 @@ def main():
 #       print("camera open")
         
         #cv2.imshow("code detector", frame)
-        if ord("q"):
+"""         if cv2.waitKey(1) == ord("q"):
             vsc.cap.read()
             cv2.destroyAllWindows()
             print("camera destroyed")
             break
     vsc.cap.release()
-    cv2.destroyAllWindows()
+    cv2.destroyAllWindows() """
 
 
 if __name__ == "__main__":
