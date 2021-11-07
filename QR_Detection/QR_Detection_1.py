@@ -17,17 +17,6 @@ height=480
 width=720
 brightness=0
 
-#Get camerainput and QR-Decoder
-cap = cv2.VideoCapture(0)
-detector = cv2.QRCodeDetector()
-
-
-# Kameraeinstellungen setzten
-cap.set(cv2.CAP_PROP_CONTRAST,contrast)
-cap.set(cv2.CAP_PROP_EXPOSURE, exposure)
-cap.set(cv2.CAP_PROP_FPS, fps)
-cap.set(3,1280)
-cap.set(4,1024)
 # cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
 # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
@@ -35,8 +24,6 @@ cap.set(4,1024)
 global i 
 i = 0
 
-print("Reading QR code using Raspberry Pi camera")
-print("Press SW1 to scan.")
 
 async def searchInFrameForQR(frame):
     data, bbox, _ = detector.detectAndDecode(frame)
@@ -50,18 +37,33 @@ async def searchInFrameForQR(frame):
         #cv2.putText(frame, data, (int(bbox[0][0][0]), int(bbox[0][0][1])), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)                    
         #cv2.imshow("code detector", frame)
 
-
+detector = cv2.QRCodeDetector()
 
 def main():
-    while (cap.isOpened()):
+    print("program started")
+    #Get camerainput and QR-Decoder
+    cap = cv2.VideoCapture(0)
+    
+    # Kameraeinstellungen setzten
+    cap.set(cv2.CAP_PROP_CONTRAST,contrast)
+    cap.set(cv2.CAP_PROP_EXPOSURE, exposure)
+    cap.set(cv2.CAP_PROP_FPS, fps)
+    cap.set(3,1280)
+    cap.set(4,1024)
+    
+    while (True):
+#         print("camera open")
         _, frame = cap.read()
+        cv2.imshow("code detector", frame)
+        
         asyncio.run(searchInFrameForQR(frame))
         if cv2.waitKey(16) == ord("q"):
             cap.read()
             cv2.destroyAllWindows()
+            print("camera destoryed")
             break
-cap.release()
-cv2.destroyAllWindows()
+    cap.release()
+    cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
