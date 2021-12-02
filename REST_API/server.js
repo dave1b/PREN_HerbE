@@ -4,9 +4,14 @@ var port = 8080
 
 var express = require('express');
 var app = express();
+
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
+
 var MongoClient = require('mongodb').MongoClient;
 app.use(express.urlencoded({ extended: false }));
-var io = require("socket.io")(port);
+
 
 
 io.on("connection", socket => {
@@ -31,7 +36,9 @@ io.on("connection", socket => {
 // Client requesting all users
 app.get('/list', (req, res) => {
    console.log("get: list")
-   res.send(getLatestRunFromDB())
+   var json = getLatestRunFromDB()
+   //console.log(json)
+   res.end(json)
 });
 
 app.post('/updateRun', (req, res) => {
@@ -41,12 +48,7 @@ app.post('/updateRun', (req, res) => {
    console.log(req.body)
 });
 
-var server = app.listen(port, function () {
-   //var host = "prenh21-dbrunner.enterpriselab.ch"
-   var host = server.address().address;
-   var port = server.address().port;
-   console.log("Example app listening at http://%s:%s", host, port)
-});
+
 
 
 function updateRunInDB(run) {
@@ -64,16 +66,27 @@ function updateRunInDB(run) {
 };
 
 function getLatestRunFromDB() {
+   var json = ""
    MongoClient.connect(url, function (err, db) {
       if (err) throw err;
       var dbo = db.db("pren");
       var query = { id: "1" };
       dbo.collection("run").find(query).toArray(function (err, result) {
          if (err) throw err;
+         json = result[0]
+         console.log(json)
          db.close();
-         console.log(result);
-         return (result)
       });
    });
+   //console.log(json)
+   return (json)
 }
 
+
+
+
+http.listen(process.env.PORT || port, function() {
+   var host = http.address().address
+   var port = http.address().port
+   console.log('App listening at http://%s:%s', host, port)
+ });
