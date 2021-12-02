@@ -35,10 +35,22 @@ io.on("connection", socket => {
 
 // Client requesting all users
 app.get('/list', (req, res) => {
+   
+   MongoClient.connect(url, function (err, db) {
+      if (err) throw err;
+      var dbo = db.db("pren");
+      var query = { id: "1" };
+      dbo.collection("run").find(query).toArray(function (err, result) {
+         if (err) throw err;
+         res.end(JSON.stringify(result[0]))
+         db.close();
+      });
+   });
+   /*
    console.log("get: list")
    var json = getLatestRunFromDB()
-   //console.log(json)
-   res.end(json)
+   console.log(json)
+   res.end(json)*/
 });
 
 app.post('/updateRun', (req, res) => {
@@ -56,7 +68,7 @@ function updateRunInDB(run) {
       if (err) throw err;
       var dbo = db.db("pren");
       var query = { id: "1" };
-      dbo.collection("run").updateOne(updateDocWhere, { $set: run }, function (err, res) {
+      dbo.collection("run").updateOne(query, { $set: run }, function (err, res) {
          if (err) throw err;
          console.log("1 document inserted");
          db.close();
