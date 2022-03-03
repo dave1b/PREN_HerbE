@@ -1,29 +1,24 @@
-// SocketConnection
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
 
-io.on("connection", socket => {
-   //either with send()
-   socket.send("Hello!");
-
-   // or with emit() and custom event names
-   socket.emit("greetings", "Hey!", { "ms": "jane" }, Buffer.from([4, 3, 3, 1]));
-
-   // handle the event sent with socket.send()
-   socket.on("message", (data) => {
-      console.log(data);
-   });
-
-   // handle the event sent with socket.emit()
-   socket.on("salutations", (elem1, elem2, elem3) => {
-      console.log(elem1, elem2, elem3);
-   });
-});
 
 // REST-API
 var MongoClient = require('mongodb').MongoClient;
 var express = require('express');
+var bodyParser = require("body-parser");
 var server = express();
+
+require('dotenv').config()
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: false }));
+server.use((req, res, next) => {
+   res.header('Access-Control-Allow-Origin', '*');
+   res.header('Access-Control-Allow-Headers', '*');
+   if (req.method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', 'POST, GET');
+      return res.status(200).json({});
+   }
+   next();
+})
+
 server.use(bodyParser.json());
 server.use(express.urlencoded({ extended: false }));
 
@@ -38,11 +33,10 @@ server.use((req, res, next) => {
    next();
 })
 var connectionString = "mongodb://localhost:27016/";
-var port = 8080
 
 
 // Client requesting all users
-server.get('/list', (req, res) => {
+server.get('/list', async (req, res) => {
    const client = await mongoClient.connect(connectionString);
    const db = client.db('pren');
    const collection = db.collection('run');
@@ -51,12 +45,17 @@ server.get('/list', (req, res) => {
    res.json(result)
 });
 
-server.post('/updateRun', (req, res) => {
+server.post('/updateRun', async (req, res) => {
    const client = await mongoClient.connect(connectionString);
    const db = client.db('pren');
    const collection = db.collection('run');
    const queryFilter = { id: "1" }
+   const run = req.body
    const result = await collection.updateOne(queryFilter, { $set: run });
+   if (run.isFinisched == true) {
+      const collection = db.collection('runArchive');
+      await collection.insertOne(run);
+   }
    if (result) {
       res.send(result);
    } else {
@@ -66,8 +65,10 @@ server.post('/updateRun', (req, res) => {
    return
 });
 
+var port = 8080
 var listener = server.listen(port);
 console.log("Server running at port " + listener.address().port)
+
 
 /*http.listen(process.env.PORT || port, function () {
    var host = http.address().address

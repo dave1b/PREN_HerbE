@@ -6,5 +6,6 @@
     "state": "driving and searching for QR-Code and Plant",
     "position": 44,
     "plant1Type": "Mentha",
-    "plantMatchPosition": 6
+    "plantMatchPosition": 6,
+    "isFinisched": false
 }
