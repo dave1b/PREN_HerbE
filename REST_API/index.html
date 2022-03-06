@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html>
-   <head><title>Hello world</title></head>
-   <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
-   <script>
-    var socket = io.connect('http://prenh21-dbrunner.enterpriselab.ch:8080');
-    socket.on('connect', function(data) {
-        socket.emit('join', 'Hello World from client');
+  <head>
+    <title>Hello world</title>
+  </head>
+  <script
+    src="https://cdn.socket.io/3.1.3/socket.io.min.js"
+    integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    var socket = io.connect("http://prenh21-dbrunner.enterpriselab.ch:8080");
+    /*
+    socket.on("connect", function (data) {
+      socket.emit("join", "Hello World from client");
+    });*/
+    socket.on("runUpdated", function (run) {
+      console.log(run);
     });
-    </script>
-   <body>Hello world</body>
+  </script>
+  <body>
+    Hello world
+    <div id="messageContainer">
+      <h1>Message Container</h1>
+    </div>
+  </body>
 </html>
