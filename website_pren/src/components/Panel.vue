@@ -1,6 +1,6 @@
 <template>
   <div class="center-container">
-    <h1>Status zu Herb-E</h1>
+    <h1>Status von Herb-E</h1>
     <div>
       <table class="table table-dark table-striped">
         <tbody>
