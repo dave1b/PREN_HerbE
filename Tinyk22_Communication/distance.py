@@ -1,40 +1,20 @@
-import sys              #Serial 
-import tinyk22_con
-
-class distance:
+class Distance:
 
     def __init__(self, ser):
         self.ser = ser
 
-
-    def getdistance(self):
+    # gets the distance from TinyK22
+    def getDistance(self):
         try:
             ser = self.ser
 
-            writeinput = (bytes("distance" + "\n", 'UTF-8'))
-            ser.write(writeinput)
+            # sends the distance-request
+            request = (bytes('distance\n', 'UTF-8'))
+            ser.write(request)
 
+            distance = ser.readline().decode('utf-8')
 
-            readline = ser.readline().decode('utf-8')
-
-            print('Distanz: ' + readline)
-
+            print(distance)
 
         finally:
             ser.close()
-
-
-
-## Main method for test reasons
-#def main():
-#    con = tinyk22_con.tinyk22_con()
-
-#    ser = con.getconnection()
-
-#    d1 = distance(ser)
-#    d1.getdistance()
-
-#    sys.exit()
-
-#if __name__ == '__main__':
-#    main()
