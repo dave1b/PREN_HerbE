@@ -5,52 +5,70 @@ import time
 
 
 class engine:
-    def getState(self):
-        con = tinyk22_con.tinyk22_con()
 
-        ser = con.getconnection()
-
-        #serialdata = ser.readline()  # take comment out when testing
-        serialdata = ser                   #for test causes
-
-        if "ENGINE" in serialdata:
-            return serialdata
-
-        return 0
+    def __init__(self, ser):
+        self.ser = ser
 
 
-    def setState(STATE):
 
-        con = tinyk22_con.tinyk22_con()
 
-        ser = con.getconnection();
 
-        serialdata = ser.writelines(STATE)
+    def setState(self,ser, STATE):
+
+
+        print('STATE: ' + STATE)
+
+        #serialdata = ser.write(str.encode(STATE))
+        writeinput = (bytes(STATE + "\n", 'UTF-8'))
+        ser.write(writeinput)
+
+        readline = ser.readline().decode('utf-8')
+        print(readline)
+
 
 
     def engineon(self):
-        e1 = engine()
 
-        if(e1.getState() == "ENGINE ON"):
-            print("Engine is already on!")
-        else:
-            e1.setState("ENGINE ON")
+        ser = self.ser
+        try:
+
+            #if(self.getState() == "ENG"):
+            #print("Engine is already on!")
+            #else:
+            self.setState(ser,'start')
+
+
+        finally:
+            #ser.close()
+            print("")
 
     def engineoff(self):
-        e1 = engine()
 
-        if(e1.getState() == "ENGINE OFF\n"):
-            print("Engine is already off")
-        else:
-            e1.setState("ENGINE OFF\n")
+        ser = self.ser
+
+        try:
+            #if(self.getState() == "ENGINE OFF\n"):
+            #print("Engine is already off")
+            #else:
+            self.setState(ser,'stop')
+        finally:
+            #ser.close()
+            print("")
+
 
 ## Main method for test reasons
-def main():
-    e1 = engine()
-   # e1.getState()
-    print(e1.getState())
+#def main():
+#    con = tinyk22_con.tinyk22_con()
+#    ser = con.getconnection()
 
-    sys.exit()
+#    e1 = engine(ser)
 
-if __name__ == '__main__':
-    main()
+#    e1.engineon()
+#    time.sleep(5)
+#    e1.engineoff()
+
+#    ser.close()
+#    sys.exit()
+
+#if __name__ == '__main__':
+#    main()

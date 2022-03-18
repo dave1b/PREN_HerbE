@@ -6,4 +6,4 @@ sollte man versuchen, das Bluetooth zu disablen (falls dieses nicht benutzt wird
 sudo vi /boot/config/txt
 add: #Disable Bluetooth dtoverlay=disable-bt
 
-Reboot to apply changes
+Reboot to apply changes§
