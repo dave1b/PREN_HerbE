@@ -1,4 +1,4 @@
-import sys              #Serial
+import sys              #Serial 
 import tinyk22_con
 
 class distance:
