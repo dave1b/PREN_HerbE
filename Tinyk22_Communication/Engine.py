@@ -23,7 +23,7 @@ class Engine:
             # ser.close()
             print("")
 
-    def updateState(ser, state):
+    def updateState(self, ser, state):
 
         print('STATE: ' + state)
 

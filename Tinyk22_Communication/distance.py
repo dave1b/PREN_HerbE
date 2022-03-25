@@ -1,3 +1,5 @@
+import Tinyk22Con
+import sys
 class Distance:
 
     def __init__(self, ser):
@@ -11,10 +13,22 @@ class Distance:
             # sends the distance-request
             request = (bytes('distance\n', 'UTF-8'))
             ser.write(request)
-
-            distance = ser.readline().decode('utf-8')
-
+            distance = str(ser.readline(),'utf-8')
             print(distance)
 
         finally:
-            ser.close()
+            #ser.close()
+            print("")
+
+def main():
+
+    con = Tinyk22Con.tinyk22_con()
+    ser = con.getconnection()
+
+    distance = Distance(ser)
+
+    distance.getDistance()
+
+
+if __name__ == '__main__':
+    main()
