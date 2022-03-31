@@ -8,6 +8,10 @@
             <td>Startzeitpunkt</td>
             <td>{{ startZeitDatum }}</td>
           </tr>
+            <tr v-if="endZeitStamp != 0">
+            <td>Endzeitpunkt</td>
+            <td>{{ endZeitStamp }}</td>
+          </tr>
           <tr>
             <td>Laufzeit</td>
             <td>{{ laufzeit }}</td>
