@@ -23,11 +23,15 @@ class PlantApiService:
                 "Api-Key": self.plantIDkey
             }).json()
         recognisedPlantsList = []
+        imgURLList = []
         for suggestion in response["suggestions"]:
             if(suggestion["probability"] >= self.minProbability):
                 recognisedPlantsList.append(suggestion["plant_name"])
+                imgURLList.append(suggestion["images"]["url"])
         if(firstScanInRun):
             self.dataModel.recognisedPlantsList1 = recognisedPlantsList
+            self.dataModel.plant1Type = recognisedPlantsList[0]
+            self.dataModel.imageURL = imgURLList[0]
         else:
             self.dataModel.recognisedPlantsListx = recognisedPlantsList
     
