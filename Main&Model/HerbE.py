@@ -15,7 +15,7 @@ from DataModel import DataModel
 from Ultrasonic import Ultrasonic
 from VideoQRCodeScanner import VideoQRCodeScanner
 from PlantApiService import PlantApiService
-from Tinyk22_Communication import Tinyk22_Communication
+from Tinyk22Interface import Tinyk22Interface
 from apiKeys import plantIDkey
 
 # import modules
@@ -29,7 +29,7 @@ class HerbE:
         self.ultrasonic = Ultrasonic(self.ultrasonicObjectDetected(), self.dataModel)
         self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
-        self.tinyk22 = Tinyk22_Communication()
+        self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback())
         self.lastUltrasonicAlertTimestamp = time.time()
         self.lastQRcodeDetectedAlertTimestap = time.time()
         self.minWaitingtimeBetweenAlerts = 5000
@@ -46,9 +46,11 @@ class HerbE:
 
     def stopEngine(self):
         self.dataModel.isDriving = False
+        self.tinyk22Interface.turnEngineOff()
 
     def startEngine(self):
         self.dataModel.isDriving = True
+        self.tinyk22Interface.turnEngineOn()
 
     def detectPlantInImage(self):
         self.plantApiService.detectPlant(self.firstPlantScanned)
