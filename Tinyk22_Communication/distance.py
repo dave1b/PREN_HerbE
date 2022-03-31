@@ -1,9 +1,10 @@
+import Tinyk22Con
+import sys
 class Distance:
 
     def __init__(self, ser):
         self.ser = ser
 
-    # gets the distance from TinyK22
     def getDistance(self):
         try:
             ser = self.ser
@@ -12,9 +13,10 @@ class Distance:
             request = (bytes('distance\n', 'UTF-8'))
             ser.write(request)
 
-            distance = ser.readline().decode('utf-8')
+            # gets the distance back from Tinyk22
+            distance = str(ser.readline(),'utf-8')
 
             print(distance)
 
         finally:
-            ser.close()
+            print("")
