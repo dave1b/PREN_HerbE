@@ -21,6 +21,17 @@
             <td>{{ zustand }}</td>
           </tr>
           <tr>
+            <td>Foto</td>
+            <td>
+              <div v-if="imageURL.length > 5">
+                <img class="plantIMG" :src="imageURL" />
+              </div>
+              <div v-if="imageURL.length < 5">
+                Es wurde noch keine Pflanze fotografiert
+              </div>
+            </td>
+          </tr>
+          <tr>
             <td>Erkannte Pflanzenart</td>
             <td>{{ erkenntePflanze }}</td>
           </tr>
@@ -69,7 +80,7 @@
         class="progress-bar"
         :class="{
           'progress-bar-striped progress-bar-animated bg-info': !finished,
-          'bg-success': finished,
+          'bg-info': finished,
         }"
         role="progressbar"
         :style="{ width: distanz + '%' }"
@@ -77,7 +88,7 @@
         aria-valuemin="0"
         aria-valuemax="100"
       ></div>
-      <img src="../assets/herb-e_mirror.png" width="50" />
+      <img src="../assets/herb-e_mirror.png" width="50" class="bg-info" />
     </div>
   </div>
 </template>
@@ -88,9 +99,7 @@ export default {
   name: "Panel",
   data() {
     return {
-      socket: io("http://prenh21-dbrunner.enterpriselab.ch:8080", {
-        transports: ["websocket"],
-      }),
+      socket: io("https://prenh21-dbrunner.enterpriselab.ch/socketIO"),
       timer: undefined,
       isConnected: false,
       startZeitDatum: "",
@@ -102,6 +111,7 @@ export default {
       erkenntePflanze: "",
       positionDerGleichenPflanze: "",
       finished: false,
+      imageURL: "",
     };
   },
   methods: {
@@ -134,6 +144,7 @@ export default {
       this.erkenntePflanze = run.plantType;
       this.positionDerGleichenPflanze = run.plantMatchPosition;
       this.finished = run.isFinished;
+      this.imageURL = run.imageURL;
       if (this.endZeitStamp > 0 && this.finished == true) {
         this.updateLaufzeit(this.endZeitStamp);
         this.stop();
@@ -151,4 +162,8 @@ export default {
   created() {},
 };
 </script>
-<style scoped></style>
+<style scoped>
+img.plantIMG{
+  width: 90%;
+}
+</style>
