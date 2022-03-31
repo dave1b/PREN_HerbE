@@ -142,7 +142,7 @@
                 }
             },
             "probability": 0.06281066508680785,
-            "confirmed": False,
+            "confirmed": false,
             "similar_images": [
                 {
                     "id": "81adf10131f67e6086783cb200447100",
