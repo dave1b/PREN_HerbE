@@ -6,7 +6,7 @@ class DataModel:
         self.startTimeStamp = None
         self.endTimeStamp = None
         self.isDriving = False
-        self.state = None
+        self.state = HerbEstates[0]
         self.distanceDriven = 0
         self.plantImage = None
         self.recognisedPlantsList1 = None
@@ -15,6 +15,7 @@ class DataModel:
         self.plant1Type = None
         self.plantMatchPosition = None
         self.isFinished = False
+        self.imageURL = None
     
     def toJSON(self):
         return {
@@ -26,5 +27,16 @@ class DataModel:
             "state": self.state,
             "plantType": self.plant1Type,
             "plantMatchPosition": self.plantMatchPosition,
-            "isFinished": self.isFinished
+            "isFinished": self.isFinished,
+            "imageURL": self.imageURL
         }
+
+# HerbE states
+HerbEstates =  {
+  "initial": "HerbiE ist parkiert und am ruhen",
+  "driving": "HerbE ist am fahren. Der Ultraschallsensor sucht nach Objekten und die Kamera nach QR-Codes.",
+  "ultraDetected": "Herbie hat mit dem Ultraschallsensor ein Objekt erkannt",
+  "qrDetected":  "HerbiE schiesst ein Foto und sucht nach der Pflanzenart.",
+  "finished": "HerbE ist gestoppt :(",
+  "goal": "Ziel erreicht!!!"
+}
