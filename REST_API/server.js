@@ -12,7 +12,7 @@ const io = require("socket.io")(httpServer, {
    serveClient: false,
    cors: {    
       origin: "*",    
-      methods: ["GET", "POST"]  
+      methods: ["GET", "POST, PUT"]  
    }
 });
 
@@ -26,20 +26,20 @@ server.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', '*');
     if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'POST, GET');
+        res.header('Access-Control-Allow-Methods', 'POST, GET, PUT');
         return res.status(200).json({});
     }
     next();
 })
 
 // Client requesting all users
-server.get('/list', async (req, res) => {
+server.get('/api/v1/listRun', async (req, res) => {
    latestRun = await getLatestRun();
    res.json(latestRun);
 });
 
 // Update run
-server.post('/updateRun', async (req, res) => {
+server.put('/api/v1/updateRun', async (req, res) => {
    const run = req.body;
    // Check validity of Key
    if (run.apiKey != API_KEY) {
