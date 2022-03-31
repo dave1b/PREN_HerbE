@@ -54,7 +54,7 @@ server.post('/updateRun', async (req, res) => {
    const client = await mongoClient.connect(CONNECTION_STRING);
    const db = client.db('pren');
    const collection = db.collection('run');
-   const queryFilter = { id: "1" }
+   const queryFilter = { id: 1 }
    const result = await collection.updateOne(queryFilter, { $set: run });
    // Copy to Archive if end
    if (run.isFinished == true) {
@@ -87,7 +87,7 @@ async function getLatestRun() {
    const client = await mongoClient.connect(CONNECTION_STRING);
    const db = client.db('pren');
    const collection = db.collection('run');
-   const queryFilter = { id: "1" };
+   const queryFilter = { id: 1 };
    const result = await collection.find(queryFilter).toArray();
    return result[0];
 }
