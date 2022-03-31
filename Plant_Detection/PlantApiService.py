@@ -1,7 +1,6 @@
 import base64
 import requests
 
-
 class PlantApiService:
     def __init__(self, plantIDkey, dataModel, minProbability = 0.025):
         self.dataModel = dataModel
