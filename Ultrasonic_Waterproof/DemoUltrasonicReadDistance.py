@@ -11,7 +11,6 @@
 
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 from DFRobot_RaspberryPi_A02YYUW import DFRobot_A02_Distance as Board
 
 if __name__ == "__main__":
