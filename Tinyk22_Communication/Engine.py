@@ -10,7 +10,6 @@ class Engine:
             self.updateState(ser, 'start')
 
         finally:
-            # ser.close()
             print("")
 
     def engineOff(self):
@@ -20,15 +19,13 @@ class Engine:
         try:
             self.updateState(ser, 'stop')
         finally:
-            # ser.close()
             print("")
 
     def updateState(self, ser, state):
-
-        print('STATE: ' + state)
 
         changeState = (bytes(state + "\n", 'UTF-8'))
         ser.write(changeState)
 
         readState = ser.readline().decode('utf-8')
+
         print(readState)

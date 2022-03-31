@@ -1,5 +1,4 @@
 import time
-
 import Tinyk22Con
 import Distance
 import Engine
@@ -10,37 +9,20 @@ class Tinyk22_Interface:
     def __init__(self, ser):
         self.ser = ser
 
+
+    #turns the engine on
     def turnEngineOn(self, engine, ser):
         return engine.engineOn()
 
+    #turns the engine off
     def turnEngineOff(self, engine, ser):
         return engine.engineOff()
 
+    #returns the distance
     def returnDistance(self, distance, ser):
         return distance.getDistance()
 
-## Main method for test reasons
-def main():
+        #newdistancecallback methode                        <##########################################################
+        ##def newDistanceCallback(self, newDistanceDriven):
+        ##self.dataModel.distanceDriven = newDistanceDriven
 
-    t22c = Tinyk22Con.tinyk22_con()
-    ser = t22c.getconnection()
-    engine = Engine.Engine(ser)
-    distance = Distance.Distance(ser)
-
-
-    interface = Tinyk22_Interface(ser)
-
-    interface.turnEngineOn(engine, ser)
-
-    time.sleep(2)
-
-    interface.turnEngineOff(engine, ser)
-
-    interface.returnDistance(distance, ser)
-    print("Test")
-
-    sys.exit()
-
-
-if __name__ == '__main__':
-    main()
