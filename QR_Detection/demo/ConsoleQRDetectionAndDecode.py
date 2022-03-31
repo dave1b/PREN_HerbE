@@ -1,17 +1,12 @@
-import numpy as np
-from queue import Queue
 import cv2
 import pyzbar.pyzbar as pyzbar
-import re
-import asyncio
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 
  
 
 class VideoStreamScanner:
-    def __init__(self, contrast, exposure):
-        self.MAX_QUEUE_SIZE = 128
+    def __init__(self, contrast = 20,exposure = 40):
         self.detector = cv2.QRCodeDetector()
         self.cap = cv2.VideoCapture(0)
         # Kameraeinstellungen setzten
@@ -31,7 +26,7 @@ class VideoStreamScanner:
             #cv2.imshow(frame)
             executor.submit(self.searchFrameForQR(frame))
 
-        #function for searching QR-Code in Frame
+    #function for searching QR-Code in Frame
     def searchFrameForQR(self, frame):
         decodedObjects = pyzbar.decode(frame)
         # Print results
@@ -41,14 +36,13 @@ class VideoStreamScanner:
         decodedObjects = ""
     
     def stop(self):
-        self.stopped = True
+        self.isRunning = False
 
 def main():
     vsc = VideoStreamScanner(contrast = 20,exposure = 40)
     print("program started")
     vsc.startCapturingFrames()
 
-
-
 if __name__ == "__main__":
-	main()
+	pass
+    #main()
