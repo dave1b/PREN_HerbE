@@ -99,7 +99,7 @@ export default {
   name: "Panel",
   data() {
     return {
-      socket: io("https://prenh21-dbrunner.enterpriselab.ch/socketIO"),
+      socket: io("https://prenh21-dbrunner.enterpriselab.ch"),
       timer: undefined,
       isConnected: false,
       startZeitDatum: "",
