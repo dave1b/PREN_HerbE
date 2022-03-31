@@ -1,35 +1,37 @@
+# import modules
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 import sys
-from threading import Thread
+import threading
 import time
 import requests
 
-from pyrsistent import T
+# Add paths
 sys.path.insert(0, '../Ultrasonic_Waterproof')
 sys.path.insert(0, '../QR_Detection')
 sys.path.insert(0, '../Plant_Detection')
 sys.path.insert(0, '../Tinyk22_Communication')
+sys.path.insert(0, '../Button')
 
 # import custom modules
-from DataModel import DataModel
+from DataModel import DataModel, HerbEstates
 from Ultrasonic import Ultrasonic
 from VideoQRCodeScanner import VideoQRCodeScanner
 from PlantApiService import PlantApiService
 from Tinyk22Interface import Tinyk22Interface
 from apiKeys import plantIDkey
-
-# import modules
-from concurrent.futures import ThreadPoolExecutor
+from Button import Button
 
 class HerbE:
     def __init__(self):
         self.dataModel = DataModel()
         self.plantIDKey = plantIDkey
         self.firstPlantScanned = False
-        self.ultrasonic = Ultrasonic(self.ultrasonicObjectDetected(), self.dataModel)
+        self.ultrasonic = Ultrasonic(self.ultrasonicObjectDetected, self.dataModel)
         self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
-        self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback())
+        self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
+        self.button = Button(self.initialStartOfHerbE,self.shutdownHerbE);
         self.lastUltrasonicAlertTimestamp = time.time()
         self.lastQRcodeDetectedAlertTimestap = time.time()
         self.minWaitingtimeBetweenAlerts = 5000
@@ -40,6 +42,7 @@ class HerbE:
         executor.submit(self.ultrasonic.startSearching)
         executor.submit(self.videoQRCodeScanner.startCapturingFrames)
         executor.submit(self.startEngine)
+        self.dataModel.state = HerbEstates["initial"]
         self.dataModel.dateTimeStamp = datetime.fromtimestamp(time.time()).strftime("%d-%m-%Y, %H:%M:%S")
         self.dataModel.startTimeStamp = time.time()
         self.postDataToRestAPI()
@@ -54,10 +57,12 @@ class HerbE:
 
     def detectPlantInImage(self):
         self.plantApiService.detectPlant(self.firstPlantScanned)
-        if(self.firstPlantScanned):
+        if not(self.firstPlantScanned):
+            self.firstPlantScanned = True
+        else:
+            self.dataModel.amountOfPlantxScanned += 1
             self.findMatchingPlant()
-        self.firstPlantScanned = True
-        self.dataModel.amountOfPlantxScanned += 1
+        self.postDataToRestAPI()
 
     def newDistanceCallback(self, newDistanceDriven):
         self.dataModel.distanceDriven = newDistanceDriven
@@ -66,11 +71,14 @@ class HerbE:
     def ultrasonicObjectDetected(self):
         if(self.isWaitingTimeOver(self.lastUltrasonicAlertTimestamp, self.minWaitingtimeBetweenAlerts)):
             self.stopEngine()
-            Thread.sleep(1000)
-            self.startEngine()
+            self.dataModel.state = HerbEstates["ultraDetected"]
+            self.postDataToRestAPI()
+            threading.Timer(5, self.startEngine)
+            
 
     def qrCodeDetected(self):
         if(self.isWaitingTimeOver(self.lastQRcodeDetectedAlertTimestap, self.minWaitingtimeBetweenAlerts)):
+            self.dataModel.state = HerbEstates["qrDetected"]
             self.videoQRCodeScanner.takePhoto()
             self.detectPlantInImage()
 
@@ -84,5 +92,11 @@ class HerbE:
         return ((time.time() - lastAlertTimestamp) > waitingThreshold)
 
     def postDataToRestAPI(self):
-        response = requests.post(self.RESTapiURL, json= self.dataModel.toJSON())
+        response = requests.put(self.RESTapiURL, json= self.dataModel.toJSON())
         print(response.status_code)
+    
+    def shutdownHerbE(self):
+        self.stopEngine()
+        self.videoQRCodeScanner.stop()
+        self.ultrasonic.stopSearching()
+        self.dataModel.state = HerbEstates["finished"]
