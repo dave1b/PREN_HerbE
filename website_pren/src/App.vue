@@ -1,15 +1,6 @@
-<script setup>
-import Panel from "./components/Panel.vue";
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
-</script>
-
 <template>
-<Header />
-<br>
-<Panel />
-<br>
-<Footer />
+<router-view></router-view>
+
 </template>
 
 <style>
