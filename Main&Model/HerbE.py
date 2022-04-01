@@ -21,6 +21,7 @@ from PlantApiService import PlantApiService
 from Tinyk22Interface import Tinyk22Interface
 from apiKeys import plantIDkey
 from Button import Button
+from Log import logger
 
 class HerbE:
     def __init__(self):
@@ -31,11 +32,12 @@ class HerbE:
         self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
-        self.button = Button(self.initialStartOfHerbE,self.shutdownHerbE);
+        self.button = Button(self.initialStartOfHerbE,self.shutdownHerbE)
         self.lastUltrasonicAlertTimestamp = time.time()
         self.lastQRcodeDetectedAlertTimestap = time.time()
         self.minWaitingtimeBetweenAlerts = 5000
-        self.RESTapiURL = "http://prenh21-dbrunner.enterpriselab.ch:8080/updateRun"
+        self.RESTapiURL = "https://prenh21-dbrunner.enterpriselab.ch/api/v1/updateRun"
+        legger.DEBUG("HerbE - HerbE initialisiert")
 
     def initialStartOfHerbE(self):
         executor = ThreadPoolExecutor(max_workers=3)   

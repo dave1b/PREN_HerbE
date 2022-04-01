@@ -1,5 +1,6 @@
 import base64
 import requests
+from Log import logger
 
 class PlantApiService:
     def __init__(self, plantIDkey, dataModel, minProbability = 0.025):
@@ -8,6 +9,8 @@ class PlantApiService:
         self.minProbability = minProbability
 
     def detectPlant(self, firstScanInRun):
+        logger.DEBUG("PlantApiSerice - detectPlant()")
+        return
         image = [base64.b64encode(self.dataModel.plantImage).decode("ascii")]
         params = {
             "images": image,
