@@ -2,18 +2,30 @@
   <header>
     <nav class="navbar navbar-dark bg-dark navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">
+           <router-link to="/" class="navbar-brand">
           <img
             src="../assets/herb-e.png"
             width="100"
             style="margin-top: -5px"
           />
           &nbsp; &nbsp; Herb-E
-        </a>
+           </router-link>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
-            <li class="nav-item active-link">
-              <a class="nav-link" style="margin-bottom: 5px" href="https://www.google.ch">PREN Team 40</a>
+            <li class="nav-item active-link"> 
+              <router-link to="/team" class="nav-link" style="margin-bottom: 5px">
+              Team 40
+            </router-link>
+            </li>
+            <li class="nav-item active-link"> 
+              <router-link to="/team" class="nav-link" style="margin-bottom: 5px">
+              Konstruktion
+            </router-link>
+            </li>
+            <li class="nav-item active-link"> 
+              <router-link to="/team" class="nav-link" style="margin-bottom: 5px">
+              Sponsoren
+            </router-link>
             </li>
           </ul>
         </div>
@@ -43,4 +55,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+li {
+  margin-left: 10px
+}
+</style>
