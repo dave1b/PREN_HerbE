@@ -6,7 +6,7 @@ class Ultrasonic:
         self.callbackObjectDetected = objectDetected
         self.dataModel = dataModel
         self.ultrasonicSensor = UltrasonicSensor()
-        self.ultrasonicSensor.set_dis_range(dis_min=0, dis_max=3000)
+        self.ultrasonicSensor.set_dis_range(min=0, max=3000)
         self.distanceThreshold = distanceThreshold
         self.serachingRunning = False
     
