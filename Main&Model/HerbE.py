@@ -21,7 +21,7 @@ from PlantApiService import PlantApiService
 from Tinyk22Interface import Tinyk22Interface
 from apiKeys import plantIDkey, restAPIKey
 from Button import Button
-from Log import logger
+from Log import Logger
 
 class HerbE:
     def __init__(self):
@@ -37,7 +37,8 @@ class HerbE:
         self.lastQRcodeDetectedAlertTimestap = time.time()
         self.minWaitingtimeBetweenAlerts = 5000
         self.RESTapiURL = "https://prenh21-dbrunner.enterpriselab.ch/api/v1/updateRun"
-        legger.DEBUG("HerbE - HerbE initialisiert")
+        self.log = Logger()
+        log.debug("HerbE - HerbE initialisiert 2")
 
     def initialStartOfHerbE(self):
         executor = ThreadPoolExecutor(max_workers=3)   
