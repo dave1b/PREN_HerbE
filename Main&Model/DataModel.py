@@ -16,8 +16,9 @@ class DataModel:
         self.plantMatchPosition = None
         self.isFinished = False
         self.imageURL = None
+        
     
-    def toJSON(self):
+    def toJSON(self, restAPIKey):
         return {
             "id": 1,
             "dateTimeStamp": self.dateStampID,
@@ -28,7 +29,8 @@ class DataModel:
             "plantType": self.plant1Type,
             "plantMatchPosition": self.plantMatchPosition,
             "isFinished": self.isFinished,
-            "imageURL": self.imageURL
+            "imageURL": self.imageURL,
+            "apiKey": restAPIKey
         }
 
 # HerbE states
