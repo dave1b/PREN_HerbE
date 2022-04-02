@@ -6,7 +6,7 @@ class DataModel:
         self.startTimeStamp = None
         self.endTimeStamp = None
         self.isDriving = False
-        self.state = HerbEstates[0]
+        self.state = HerbEstates["initial"]
         self.distanceDriven = 0
         self.plantImage = None
         self.recognisedPlantsList1 = None
