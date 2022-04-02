@@ -19,7 +19,7 @@ from Ultrasonic import Ultrasonic
 from VideoQRCodeScanner import VideoQRCodeScanner
 from PlantApiService import PlantApiService
 from Tinyk22Interface import Tinyk22Interface
-from apiKeys import plantIDkey
+from apiKeys import plantIDkey, restAPIKey
 from Button import Button
 from Log import logger
 
@@ -94,7 +94,7 @@ class HerbE:
         return ((time.time() - lastAlertTimestamp) > waitingThreshold)
 
     def postDataToRestAPI(self):
-        response = requests.put(self.RESTapiURL, json= self.dataModel.toJSON())
+        response = requests.put(self.RESTapiURL, json= self.dataModel.toJSON(restAPIKey))
         print(response.status_code)
     
     def shutdownHerbE(self):
