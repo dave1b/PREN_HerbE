@@ -1,15 +1,16 @@
 import base64
 import requests
-from Log import logger
+from Log import Logger
 
 class PlantApiService:
     def __init__(self, plantIDkey, dataModel, minProbability = 0.025):
         self.dataModel = dataModel
         self.plantIDkey = plantIDkey
         self.minProbability = minProbability
+        self.log = Logger()
 
     def detectPlant(self, firstScanInRun):
-        logger.DEBUG("PlantApiSerice - detectPlant()")
+        log.debug("PlantApiSerice - detectPlant()")
         return
         image = [base64.b64encode(self.dataModel.plantImage).decode("ascii")]
         params = {
