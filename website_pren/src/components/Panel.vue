@@ -39,6 +39,10 @@
             <td>Erkannte Pflanzenart</td>
             <td>{{ erkenntePflanze }}</td>
           </tr>
+          <tr v-if="commonName.length > 1">
+            <td>Gemeiner Name</td>
+            <td>{{ commonName }}</td>
+          </tr>
           <tr>
             <td style="width: 35%">Position der gleichen Pflanze</td>
             <td>{{ positionDerGleichenPflanze }}</td>
@@ -95,6 +99,7 @@
       <img src="../assets/herb-e_mirror.png" width="50" class="bg-info" />
     </div>
   </div>
+  <div style="height: 150px"></div>
 </template>
 
 <script>
@@ -113,6 +118,7 @@ export default {
       distanz: "",
       zustand: "",
       erkenntePflanze: "noch undefiniert",
+      commonName: "",
       positionDerGleichenPflanze: "noch undefiniert",
       finished: false,
       imageURL: "",
@@ -132,6 +138,9 @@ export default {
       var laufzeitInMilli = Math.floor(
         (zeitStamp - this.startZeitStamp) / 1000
       );
+      if (laufzeitInMilli < 0) {
+        laufzeitInMilli = 0;
+      }
       this.laufzeit =
         Math.floor(laufzeitInMilli / 60).toString() +
         " Minuten " +
@@ -147,10 +156,9 @@ export default {
       this.startZeitStamp = run.startTimeStamp;
       this.distanz = run.distance;
       this.zustand = run.state;
-      if (run.plantType != null && run.plantMatchPosition != null) {
-        this.erkenntePflanze = run.plantType;
-        this.positionDerGleichenPflanze = run.plantMatchPosition;
-      }
+      this.erkenntePflanze = run.plantType;
+      this.commonName = run.commonName;
+      this.positionDerGleichenPflanze = run.plantMatchPosition;
       this.imageURL = run.imageURL;
       if (this.endZeitStamp > 0 && this.finished == true) {
         this.updateLaufzeit(this.endZeitStamp);
@@ -162,7 +170,7 @@ export default {
       }
     }),
       this.socket.on("connect", () => {
-        console.log("Successfully connected!");
+        console.log("Successfully connected to Websocket!");
       });
   },
   created() {},
@@ -170,6 +178,6 @@ export default {
 </script>
 <style scoped>
 img.plantIMG {
-  width: 90%;
+  width: 95%;
 }
 </style>
