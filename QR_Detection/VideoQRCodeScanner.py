@@ -1,7 +1,10 @@
+import sys
 import cv2
 import pyzbar.pyzbar as pyzbar
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
+sys.path.insert(0, '../Main&Model')
+from Log import Logger
 
 class VideoQRCodeScanner:
     def __init__(self, qrDetectedCallback, dataModel, contrast = 20,exposure = 40):
@@ -9,6 +12,7 @@ class VideoQRCodeScanner:
         self.detector = cv2.QRCodeDetector()
         self.qrDetectedCallback = qrDetectedCallback
         self.cap = cv2.VideoCapture(0)
+        self.log = Logger()
         # Kameraeinstellungen setzten
         self.cap.set(cv2.CAP_PROP_CONTRAST,contrast)
         self.cap.set(cv2.CAP_PROP_EXPOSURE, exposure)
@@ -21,7 +25,7 @@ class VideoQRCodeScanner:
         self.isRunning = True
         executor = ThreadPoolExecutor(max_workers=5)    
         while (self.isRunning):
-            print("capture frame at " + str(datetime.now()))
+            #print("capture frame at " + str(datetime.now()))
             _, frame = self.cap.read()
             #cv2.imshow(frame)
             executor.submit(self.searchFrameForQR(frame))
@@ -31,16 +35,19 @@ class VideoQRCodeScanner:
         decodedObjects = pyzbar.decode(frame)
         # Print results
         for obj in decodedObjects:
-            self.dataModel.QRcodeContent = obj.data
-            self.qrDetectedCallback()
             print('Type : ', obj.type)
             print('Data : ', obj.data,'\n')  
+            self.log.debug("QR - QR detected: " + str(obj.data))
+            self.dataModel.QRcodeContent = obj.data
+            self.qrDetectedCallback()
+            #cv2.imwrite('test_frame_.png', frame)
         decodedObjects = ""
     
     def stop(self):
         self.isRunning = False
 
     def takePhoto(self):
+        self.log("QR - takePhoto()")
         self.dataModel.plantImage = self.cap.read()
 
 
