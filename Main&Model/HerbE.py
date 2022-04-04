@@ -20,7 +20,7 @@ from VideoQRCodeScanner import VideoQRCodeScanner
 from PlantApiService import PlantApiService
 #from Tinyk22Interface import Tinyk22Interface
 from Tinyk22InterfaceFake import Tinyk22Interface
-from apiKeys import plantIDkey, restAPIKeyrestAPIKey
+from apiKeys import plantIDkey, restAPIKey
 from Button import Button
 from Log import Logger
 
@@ -43,11 +43,11 @@ class HerbE:
 
     def initialStartOfHerbE(self):
         self.log.debug("HerbE - initialStartOfHerbE()")
+        self.dataModel.state = HerbEstates["initial"]
         executor = ThreadPoolExecutor(max_workers=3)   
         executor.submit(self.ultrasonic.startSearching)
         executor.submit(self.videoQRCodeScanner.startCapturingFrames)
         executor.submit(self.startEngine)
-        self.dataModel.state = HerbEstates["initial"]
         self.dataModel.dateTimeStamp = datetime.fromtimestamp(time.time()).strftime("%d-%m-%Y, %H:%M:%S")
         self.dataModel.startTimeStamp = (time.time() * 1000) # *1000 cause of JS in Client
         self.postDataToRestAPI()
@@ -57,11 +57,13 @@ class HerbE:
         self.log.debug("HerbE - stopEngine()")
         self.dataModel.isDriving = False
         self.tinyk22Interface.turnEngineOff()
+        self.dataModel.state = HerbEstates["stop"]
 
     def startEngine(self):
         self.log.debug("HerbE - startEngine()")
         self.dataModel.isDriving = True
         self.tinyk22Interface.turnEngineOn()
+        self.dataModel.state = HerbEstates["driving"]
 
     def detectPlantInImage(self):
         self.log.debug("HerbE - detectPlantInImage()")
@@ -72,6 +74,7 @@ class HerbE:
             self.dataModel.amountOfPlantxScanned += 1
             self.findMatchingPlant()
         self.postDataToRestAPI()
+        self.startEngine()
 
     def newDistanceCallback(self, newDistanceDriven):
         self.log.debug("HerbE - newDistanceCallback()")
@@ -81,21 +84,21 @@ class HerbE:
     def ultrasonicObjectDetected(self):
         self.log.debug("HerbE - ultrasonicObjectDetected()")
         if(self.isWaitingTimeOver(self.lastUltrasonicAlertTimestamp, self.minWaitingtimeBetweenAlerts)):
-            self.stopEngine()
             self.dataModel.state = HerbEstates["ultraDetected"]
+            self.stopEngine()
             self.postDataToRestAPI()
-            threading.Timer(5, self.startEngine)
+            threading.Timer(5, self.startEngine).start()
             
 
     def qrCodeDetected(self):
         self.log.debug("HerbE - qrCodeDetected()")       
         if(self.isWaitingTimeOver(self.lastQRcodeDetectedAlertTimestap, self.minWaitingtimeBetweenAlerts)):
             self.lastQRcodeDetectedAlertTimestap = time.time()
+            self.log.debug("HerbE - qrCodeDetected()")
             self.dataModel.state = HerbEstates["qrDetected"]
             self.videoQRCodeScanner.takePhoto()
             self.detectPlantInImage()
             self.log.debug("HerbE - qrCodeDetected ende()")
-
 
     def findMatchingPlant(self):
         self.log.debug("HerbE - findMatchingPlant()")
@@ -120,5 +123,3 @@ class HerbE:
         self.ultrasonic.stopSearching()
         self.dataModel.state = HerbEstates["finished"]
         self.dataModel.endTimeStamp = int(time.time() * 1000) # *1000 cause of JS in Client
-
-
