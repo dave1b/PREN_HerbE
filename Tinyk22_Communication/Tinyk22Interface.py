@@ -45,4 +45,5 @@ class Tinyk22Interface:
 
     def startIntervalTime(self):
         self.log.debug("Tinyk22 Interface: startIntervalTime()")
-        self.thread.start()
+        if not(self.thread.is_alive()):
+            self.thread.start()
