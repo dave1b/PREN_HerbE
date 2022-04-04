@@ -4,7 +4,7 @@ class DataModel:
         self.UltrasonicObjectDetected = False
         self.dateTimeStamp = None
         self.startTimeStamp = None
-        self.endTimeStamp = None
+        self.endTimeStamp = 0
         self.isDriving = False
         self.state = HerbEstates["initial"]
         self.distanceDriven = 0
@@ -15,13 +15,13 @@ class DataModel:
         self.plant1Type = None
         self.plantMatchPosition = None
         self.isFinished = False
-        self.imageURL = None
+        self.imageURL = ""
         
     
     def toJSON(self, restAPIKey):
         return {
             "id": 1,
-            "dateTimeStamp": self.dateStampID,
+            "dateTimeStamp": self.dateTimeStamp,
             "startTimeStamp": self.startTimeStamp,
             "endTimeStamp": self.endTimeStamp,
             "distance": self.distanceDriven,
