@@ -8,7 +8,7 @@
             <td>Startzeitpunkt</td>
             <td>{{ startZeitDatum }}</td>
           </tr>
-            <tr v-if="endZeitStamp != 0">
+          <tr v-if="endZeitStamp != 0">
             <td>Endzeitpunkt</td>
             <td>{{ endZeitStamp }}</td>
           </tr>
@@ -40,7 +40,7 @@
             <td>{{ erkenntePflanze }}</td>
           </tr>
           <tr>
-            <td>Position der gleichen Pflanze</td>
+            <td style="width: 35%">Position der gleichen Pflanze</td>
             <td>{{ positionDerGleichenPflanze }}</td>
           </tr>
         </tbody>
@@ -112,14 +112,15 @@ export default {
       laufzeit: "",
       distanz: "",
       zustand: "",
-      erkenntePflanze: "",
-      positionDerGleichenPflanze: "",
+      erkenntePflanze: "noch undefiniert",
+      positionDerGleichenPflanze: "noch undefiniert",
       finished: false,
       imageURL: "",
     };
   },
   methods: {
     start() {
+      this.updateLaufzeit(Date.now());
       this.timer = setInterval(() => {
         this.updateLaufzeit(Date.now());
       }, 1000);
@@ -140,20 +141,21 @@ export default {
   },
   mounted() {
     this.socket.on("runUpdated", (run) => {
+      this.endZeitStamp = run.endTimeStamp;
+      this.finished = run.isFinished;
       this.startZeitDatum = run.dateTimeStamp;
       this.startZeitStamp = run.startTimeStamp;
-      this.endZeitStamp = run.endTimeStamp;
       this.distanz = run.distance;
       this.zustand = run.state;
-      this.erkenntePflanze = run.plantType;
-      this.positionDerGleichenPflanze = run.plantMatchPosition;
-      this.finished = run.isFinished;
+      if (run.plantType != null && run.plantMatchPosition != null) {
+        this.erkenntePflanze = run.plantType;
+        this.positionDerGleichenPflanze = run.plantMatchPosition;
+      }
       this.imageURL = run.imageURL;
       if (this.endZeitStamp > 0 && this.finished == true) {
         this.updateLaufzeit(this.endZeitStamp);
         this.stop();
       } else {
-        this.updateLaufzeit(Date.now());
         if (this.timer == undefined) {
           this.start();
         }
@@ -167,7 +169,7 @@ export default {
 };
 </script>
 <style scoped>
-img.plantIMG{
+img.plantIMG {
   width: 90%;
 }
 </style>
