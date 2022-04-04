@@ -16,7 +16,7 @@ class PlantApiService:
             return base64.b64encode(file.read()).decode("ascii")
     def detectPlant(self, firstPlantScanned):
         self.log.info("PlantApiSerice - detectPlant()")
-        image_path = '../Main&Model/x.png'
+        image_path = '../Main&Model/plantImage.png'
         self.log.info("PlantApiSerice - detectPlant() 1")
         image = self.encode_file(image_path)
         self.log.info("PlantApiSerice - detectPlant() 2")
