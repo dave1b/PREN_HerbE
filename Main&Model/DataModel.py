@@ -12,8 +12,9 @@ class DataModel:
         self.recognisedPlantsList1 = None
         self.recognisedPlantsListx = None
         self.amountOfPlantxScanned = 1
-        self.plant1Type = None
-        self.plantMatchPosition = None
+        self.plant1Type = "noch undefiniert"
+        self.commonName = ""
+        self.plantMatchPosition = "noch undefiniert"
         self.isFinished = False
         self.imageURL = ""
         
@@ -27,6 +28,7 @@ class DataModel:
             "distance": self.distanceDriven,
             "state": self.state,
             "plantType": self.plant1Type,
+            "commonName": self.commonName,
             "plantMatchPosition": self.plantMatchPosition,
             "isFinished": self.isFinished,
             "imageURL": self.imageURL,
@@ -39,6 +41,7 @@ HerbEstates =  {
   "driving": "HerbE ist am fahren. Der Ultraschallsensor sucht nach Objekten und die Kamera nach QR-Codes.",
   "ultraDetected": "Herbie hat mit dem Ultraschallsensor ein Objekt erkannt",
   "qrDetected":  "HerbiE schiesst ein Foto und sucht nach der Pflanzenart.",
+  "stop":  "HerbiE hat angehalten.",
   "finished": "HerbE ist gestoppt :(",
   "goal": "Ziel erreicht!!!"
 }
