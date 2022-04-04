@@ -47,8 +47,11 @@ class VideoQRCodeScanner:
         self.isRunning = False
 
     def takePhoto(self):
-        self.log("QR - takePhoto()")
-        self.dataModel.plantImage = self.cap.read()
+        self.log.debug("QR - takePhoto()")
+        _, frame = self.cap.read()
+        cv2.imwrite('plantImage.png',frame)
+        self.log.debug("QR - takePhoto()")
+        self.dataModel.plantImage = frame
 
 
 def main():
