@@ -1,5 +1,7 @@
 import base64
 import requests
+import sys
+sys.path.insert(0, '../Main&Model')
 from Log import Logger
 
 class PlantApiService:
@@ -8,42 +10,52 @@ class PlantApiService:
         self.plantIDkey = plantIDkey
         self.minProbability = minProbability
         self.log = Logger()
-
-    def detectPlant(self, firstScanInRun):
+    def encode_file(self, file_name):
+        self.log.info("PlantApiSerice - encode_file()")
+        with open(file_name, "rb") as file:
+            return base64.b64encode(file.read()).decode("ascii")
+    def detectPlant(self, firstPlantScanned):
         self.log.info("PlantApiSerice - detectPlant()")
-        uncodedImage = self.dataModel.plantImage
-        self.log.info("PlantApiSerice - detectPlant(): " + str(uncodedImage))
-        image = base64.b64encode(uncodedImage).decode("ascii")
+        image_path = '../Main&Model/x.png'
+        self.log.info("PlantApiSerice - detectPlant() 1")
+        image = self.encode_file(image_path)
+        self.log.info("PlantApiSerice - detectPlant() 2")
         self.log.info("PlantApiSerice - detectPlant(): after encoding")
 
         params = {
-            "api_key": self.plantIDkey,
-            "images": image,
+             "api_key": self.plantIDkey,
+            "images": [image],
             "modifiers": ["crops_medium"],
-            "plant_language": "en",  # de not supported
+            "plant_language": "de",  # de not supported
             "plant_details": ["common_names"]
         }
         headers = {
             "Content-Type": "application/json"
         }
-        self.log.info("\nPlantApiSerice - detectPlant(): before post")
+        self.log.info("PlantApiSerice - detectPlant(): before post")
         response = requests.post("https://api.plant.id/v2/identify",
                                  json=params,
                                  headers=headers)
         self.log.info("PlantApiSerice - detectPlant(): after post")
+        self.log.info("PlantApiSerice - detectPlant(): RESPONSE: " + str(response))
         response = response.json()
         recognisedPlantsList = []
-        imgURLList = []
+        imgURL = (response["images"][0]["url"])
+        self.log.info("PlantApiSerice - detectPlant(): URL" + str(imgURL))
         for suggestion in response["suggestions"]:
             if(suggestion["probability"] >= self.minProbability):
                 recognisedPlantsList.append(suggestion["plant_name"])
-                imgURLList.append(suggestion["images"]["url"])
-        if(firstScanInRun):
+        if not(firstPlantScanned):
             self.dataModel.recognisedPlantsList1 = recognisedPlantsList
+            self.dataModel.commonName = response["suggestions"][0]["plant_details"]["common_names"][0]
             self.dataModel.plant1Type = recognisedPlantsList[0]
-            self.dataModel.imageURL = imgURLList[0]
+            self.dataModel.imageURL = imgURL
+            self.log.info("PlantApiSerice - detectPlant() plantList " + str(self.dataModel.recognisedPlantsList1))
+            self.log.info("PlantApiSerice - detectPlant() plant1Type " + str(self.dataModel.plant1Type))
         else:
             self.dataModel.recognisedPlantsListx = recognisedPlantsList
+            self.log.info("PlantApiSerice - detectPlant() recognisedPlantsListx " + str(self.dataModel.recognisedPlantsListx))
+        self.log.info("PlantApiSerice - detectPlant(): am Ende")   
 
     def findMatchingPlantInDataModel(self):
         return False #for testing only
