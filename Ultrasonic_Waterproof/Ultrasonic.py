@@ -1,23 +1,31 @@
 import time
+import sys
+sys.path.insert(0, '../Main_Model')
+from Log import Logger
 from DFRobotRaspberryPiA02YYUW import DFRobotA02Distance as UltrasonicSensor
 
 class Ultrasonic:
-    def __init__(self, objectDetected, dataModel, distanceThreshold = 1000):
-        self.callbackObjectDetected = objectDetected
+    def __init__(self, objectDetectedCallback, dataModel, distanceThreshold = 1000):
+        self.callbackObjectDetected = objectDetectedCallback
         self.dataModel = dataModel
         self.ultrasonicSensor = UltrasonicSensor()
         self.ultrasonicSensor.set_dis_range(min=0, max=3000)
         self.distanceThreshold = distanceThreshold
-        self.serachingRunning = False
+        self.searchingRunning = False
+        self.log = Logger()
+        self.log.debug("Ultrasonic - initialisiert")
     
     def startSearching(self):
         self.startSearching = True
-        while self.serachingRunning:
+        self.log.debug("Ultrasonic - startSearching()")
+        while self.searchingRunning:
             distance = self.ultrasonicSensor.getDistance()
             if distance <= self.distanceThreshold:
-                self.callbackObjectDetected()
+                self.objectDetectedCallback()
                 self.dataModel.UltrasonicObjectDetected = True
+            self.log.debug("Ultrasonic - meassured Distance: " + str(distance))
             time.sleep(0.3)    
     
     def stopSearching(self):
-        self.serachingRunning = False
+        self.log.debug("Ultrasonic - stopSearching")
+        self.searchingRunning = False
