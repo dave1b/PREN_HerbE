@@ -1,6 +1,6 @@
 from threading import Timer
 import sys
-sys.path.insert(0, '../Main&Model')
+sys.path.insert(0, '../Main_Model')
 from Log import Logger
 
 class Tinyk22Interface:
