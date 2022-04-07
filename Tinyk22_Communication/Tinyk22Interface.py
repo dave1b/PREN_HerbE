@@ -3,7 +3,7 @@ from Engine import Engine
 from Tinyk22Con import Tinyk22Con
 from threading import Timer
 import sys
-sys.path.insert(0, '../Main_Model')
+sys.path.insert(0, '../Main&Model')
 from Log import Logger
 
 class Tinyk22Interface:
@@ -33,8 +33,8 @@ class Tinyk22Interface:
         distance = self.distance.getDistance(self.ser)
         self.newDistanceCallback(distance)
 
-     def func_wrapper(self):
-            self.log.debug("Tinyk22 Interface: func_wrapper()")
+    def func_wrapper(self):
+        self.log.debug("Tinyk22 Interface: func_wrapper()")
         if(self.engineRunning):
             self.log.debug("Tinyk22 Interface: startIntervalTime() if(self.engineRunning)")
             self.receiveDistanceAndCallCallback()
