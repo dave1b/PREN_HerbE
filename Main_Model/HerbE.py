@@ -29,7 +29,7 @@ class HerbE:
         self.dataModel = DataModel()
         self.plantIDKey = plantIDkey
         self.firstPlantScanned = False
-        self.ultrasonic = Ultrasonic(self.ultrasonicObjectDetected, self.dataModel)
+        self.ultrasonic = Ultrasonic(self.ultrasonicObjectDetected, self.dataModel, 1000)
         self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
@@ -82,8 +82,9 @@ class HerbE:
         self.postDataToRestAPI()
 
     def ultrasonicObjectDetected(self):
-        self.log.debug("HerbE - ultrasonicObjectDetected()")
         if(self.isWaitingTimeOver(self.lastUltrasonicAlertTimestamp, self.minWaitingtimeBetweenAlerts)):
+            self.lastUltrasonicAlertTimestamp = time.time()
+            self.log.debug("HerbE - ultrasonicObjectDetected()")
             self.dataModel.state = HerbEstates["ultraDetected"]
             self.stopEngine()
             self.postDataToRestAPI()
@@ -91,14 +92,12 @@ class HerbE:
             
 
     def qrCodeDetected(self):
-        self.log.debug("HerbE - qrCodeDetected()")       
         if(self.isWaitingTimeOver(self.lastQRcodeDetectedAlertTimestap, self.minWaitingtimeBetweenAlerts)):
             self.lastQRcodeDetectedAlertTimestap = time.time()
             self.log.debug("HerbE - qrCodeDetected()")
             self.dataModel.state = HerbEstates["qrDetected"]
             self.videoQRCodeScanner.takePhoto()
             self.detectPlantInImage()
-            self.log.debug("HerbE - qrCodeDetected ende()")
 
     def findMatchingPlant(self):
         self.log.debug("HerbE - findMatchingPlant()")
