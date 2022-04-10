@@ -1,4 +1,5 @@
 import serial
+
 import time
 
 class DFRobotA02Distance:
@@ -11,9 +12,9 @@ class DFRobotA02Distance:
   STA_ERR_CHECK_LOW_LIMIT = 0x04
   STA_ERR_DATA = 0x05
 
+  ## last operate status, users can use this variable to determine the result of a function call. 
   last_operate_status = STA_OK
-  ## variable 
-  distance = 0
+
 
   ## Maximum range
   distance_max = 4500
@@ -21,6 +22,11 @@ class DFRobotA02Distance:
   range_max = 4500
 
   def __init__(self):
+    '''
+      @brief    Sensor initialization.
+    '''
+    ## variable 
+    self.distance = 0
     self._ser = serial.Serial("/dev/ttyAMA0", 9600)
     if self._ser.isOpen() != True:
       self.last_operate_status = self.STA_ERR_SERIAL
@@ -30,6 +36,10 @@ class DFRobotA02Distance:
     self.distance_min = min
 
   def getDistance(self):
+    '''
+      @brief    Get measured distance
+      @return    measured distance
+    '''
     self._measure()
     return self.distance
   
@@ -38,6 +48,13 @@ class DFRobotA02Distance:
 
   def _measure(self):
     data = []
+    i = 0
+    timenow = time.time()
+    while self._ser.inWaiting() == 0:
+      i += 1
+      time.sleep(0.05)
+      if i > 4:
+        break
     i = 0
     while self._ser.inWaiting() > 0:
       rlt = self._ser.read()
@@ -51,6 +68,7 @@ class DFRobotA02Distance:
         data = []
       if i == 4:
         break
+    #self._ser.read(self._ser.inWaiting()) 
     if i == 4:
       sum = self._check_sum(data)
       if sum != data[3]:
@@ -58,3 +76,11 @@ class DFRobotA02Distance:
       else:
         self.distance = data[1]*256 + data[2]
         self.last_operate_status = self.STA_OK
+      if self.distance > self.distance_max:
+        self.last_operate_status = self.STA_ERR_CHECK_OUT_LIMIT
+        self.distance = self.distance_max
+      elif self.distance < self.distance_min:
+        self.last_operate_status = self.STA_ERR_CHECK_LOW_LIMIT
+        self.distance = self.distance_min
+    else:
+      self.last_operate_status = self.STA_ERR_DATA
