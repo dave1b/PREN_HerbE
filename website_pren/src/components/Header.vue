@@ -10,26 +10,7 @@
           />
           &nbsp; &nbsp; Herb-E
            </router-link>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active-link"> 
-              <router-link to="/team" class="nav-link" style="margin-bottom: 5px">
-              Team 40
-            </router-link>
-            </li>
-            <li class="nav-item active-link"> 
-              <router-link to="/team" class="nav-link" style="margin-bottom: 5px">
-              Konstruktion
-            </router-link>
-            </li>
-            <li class="nav-item active-link"> 
-              <router-link to="/team" class="nav-link" style="margin-bottom: 5px">
-              Sponsoren
-            </router-link>
-            </li>
-          </ul>
-        </div>
-        <button
+           <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -40,6 +21,26 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active-link"> 
+              <router-link to="/team" class="nav-link" style="margin-bottom: 5px">
+              Unser Team
+            </router-link>
+            </li>
+            <li class="nav-item active-link"> 
+              <router-link to="/construction" class="nav-link" style="margin-bottom: 5px">
+              Konstruktion
+            </router-link>
+            </li>
+            <li class="nav-item active-link"> 
+              <router-link to="/sponsoren" class="nav-link" style="margin-bottom: 5px">
+              Sponsoren
+            </router-link>
+            </li>
+          </ul>
+        </div>
+        
       </div>
     </nav>
   </header>
