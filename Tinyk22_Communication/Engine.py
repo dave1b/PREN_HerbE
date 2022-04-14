@@ -21,7 +21,9 @@ class Engine:
         finally:
             print("")
 
-    def updateState(self, ser, state):
+    def updateState(self, state):
+
+        ser = self.ser
 
         changeState = (bytes(state + "\n", 'UTF-8'))
         ser.write(changeState)
