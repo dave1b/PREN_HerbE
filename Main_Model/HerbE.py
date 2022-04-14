@@ -18,8 +18,8 @@ from DataModel import DataModel, HerbEstates
 from Ultrasonic import Ultrasonic
 from VideoQRCodeScanner import VideoQRCodeScanner
 from PlantApiService import PlantApiService
-#from Tinyk22Interface import Tinyk22Interface
-from Tinyk22InterfaceFake import Tinyk22Interface
+from Tinyk22Interface import Tinyk22Interface
+#from Tinyk22InterfaceFake import Tinyk22Interface
 from apiKeys import plantIDkey, restAPIKey
 from Button import Button
 from Log import Logger
