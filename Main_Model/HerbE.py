@@ -19,10 +19,11 @@ from Ultrasonic import Ultrasonic
 from VideoQRCodeScanner import VideoQRCodeScanner
 from PlantApiService import PlantApiService
 from Tinyk22Interface import Tinyk22Interface
-#from Tinyk22InterfaceFake import Tinyk22Interface
+# from Tinyk22InterfaceFake import Tinyk22Interface
 from apiKeys import plantIDkey, restAPIKey
 from Button import Button
 from Log import Logger
+
 
 class HerbE:
     def __init__(self):
@@ -33,7 +34,7 @@ class HerbE:
         self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
-        self.button = Button(self.initialStartOfHerbE,self.shutdownHerbE)
+        self.button = Button(self.initialStartOfHerbE, self.shutdownHerbE)
         self.lastUltrasonicAlertTimestamp = time.time()
         self.lastQRcodeDetectedAlertTimestap = time.time()
         self.minWaitingtimeBetweenAlerts = 5
@@ -44,14 +45,13 @@ class HerbE:
     def initialStartOfHerbE(self):
         self.log.debug("HerbE - initialStartOfHerbE()")
         self.dataModel.state = HerbEstates["initial"]
-        executor = ThreadPoolExecutor(max_workers=3)   
+        executor = ThreadPoolExecutor(max_workers=3)
         executor.submit(self.ultrasonic.startSearching)
         executor.submit(self.videoQRCodeScanner.startCapturingFrames)
         executor.submit(self.startEngine)
         self.dataModel.dateTimeStamp = datetime.fromtimestamp(time.time()).strftime("%d-%m-%Y, %H:%M:%S")
-        self.dataModel.startTimeStamp = (time.time() * 1000) # *1000 cause of JS in Client
+        self.dataModel.startTimeStamp = (time.time() * 1000)  # *1000 cause of JS in Client
         self.postDataToRestAPI()
-        
 
     def stopEngine(self):
         self.log.debug("HerbE - stopEngine()")
@@ -68,7 +68,7 @@ class HerbE:
     def detectPlantInImage(self):
         self.log.debug("HerbE - detectPlantInImage()")
         self.plantApiService.detectPlant(self.firstPlantScanned)
-        if not(self.firstPlantScanned):
+        if not (self.firstPlantScanned):
             self.firstPlantScanned = True
         else:
             self.dataModel.amountOfPlantxScanned += 1
@@ -82,17 +82,16 @@ class HerbE:
         self.postDataToRestAPI()
 
     def ultrasonicObjectDetected(self):
-        if(self.isWaitingTimeOver(self.lastUltrasonicAlertTimestamp, self.minWaitingtimeBetweenAlerts)):
+        if (self.isWaitingTimeOver(self.lastUltrasonicAlertTimestamp, self.minWaitingtimeBetweenAlerts)):
             self.lastUltrasonicAlertTimestamp = time.time()
             self.log.debug("HerbE - ultrasonicObjectDetected()")
             self.dataModel.state = HerbEstates["ultraDetected"]
             self.stopEngine()
             self.postDataToRestAPI()
             threading.Timer(5, self.startEngine).start()
-            
 
     def qrCodeDetected(self):
-        if(self.isWaitingTimeOver(self.lastQRcodeDetectedAlertTimestap, self.minWaitingtimeBetweenAlerts)):
+        if (self.isWaitingTimeOver(self.lastQRcodeDetectedAlertTimestap, self.minWaitingtimeBetweenAlerts)):
             self.lastQRcodeDetectedAlertTimestap = time.time()
             self.log.debug("HerbE - qrCodeDetected()")
             self.dataModel.state = HerbEstates["qrDetected"]
@@ -103,7 +102,7 @@ class HerbE:
         self.log.debug("HerbE - findMatchingPlant()")
         didFindMatch = False
         didFindMatch = self.plantApiService.findMatchingPlantInDataModel()
-        if(didFindMatch):
+        if (didFindMatch):
             self.postDataToRestAPI()
 
     def isWaitingTimeOver(self, lastAlertTimestamp, waitingThreshold):
@@ -112,13 +111,13 @@ class HerbE:
 
     def postDataToRestAPI(self):
         self.log.debug("HerbE - postDataToRestAPI()")
-        response = (requests.put(self.RESTapiURL, json= self.dataModel.toJSON(restAPIKey))).status_code
-        #self.log.debug("HerbE - " + str(response))
-    
+        response = (requests.put(self.RESTapiURL, json=self.dataModel.toJSON(restAPIKey))).status_code
+        # self.log.debug("HerbE - " + str(response))
+
     def shutdownHerbE(self):
         self.log.debug("HerbE - shutdownHerbE()")
         self.stopEngine()
         self.videoQRCodeScanner.stop()
         self.ultrasonic.stopSearching()
         self.dataModel.state = HerbEstates["finished"]
-        self.dataModel.endTimeStamp = int(time.time() * 1000) # *1000 cause of JS in Client
+        self.dataModel.endTimeStamp = int(time.time() * 1000)  # *1000 cause of JS in Client
