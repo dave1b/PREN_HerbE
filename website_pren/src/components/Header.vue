@@ -8,7 +8,6 @@
             width="100"
             style="margin-top: -5px"
           />
-          &nbsp; &nbsp; Herb-E
            </router-link>
            <button
           class="navbar-toggler"
@@ -23,18 +22,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
+            <li class="nav-item active-link" > 
+              <router-link to="/" class="nav-link" style="margin-bottom: 5px"  v-bind:class="{'active':('Home' == this.$route.name)}">
+              Herb-E
+            </router-link>
+            </li>
             <li class="nav-item active-link"> 
-              <router-link to="/team" class="nav-link" style="margin-bottom: 5px">
+              <router-link to="/team" class="nav-link" style="margin-bottom: 5px" v-bind:class="{'active':('Team' == this.$route.name)}">
               Unser Team
             </router-link>
             </li>
             <li class="nav-item active-link"> 
-              <router-link to="/construction" class="nav-link" style="margin-bottom: 5px">
+              <router-link to="/construction" class="nav-link" style="margin-bottom: 5px" v-bind:class="{'active':('Construction' == this.$route.name)}">
               Konstruktion
             </router-link>
             </li>
             <li class="nav-item active-link"> 
-              <router-link to="/sponsoren" class="nav-link" style="margin-bottom: 5px">
+              <router-link to="/sponsoren" class="nav-link" style="margin-bottom: 5px" v-bind:class="{'active':('Sponsoren' == this.$route.name)}">
               Sponsoren
             </router-link>
             </li>
