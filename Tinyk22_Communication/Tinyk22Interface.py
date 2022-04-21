@@ -10,7 +10,7 @@ from Log import Logger
 
 class Tinyk22Interface:
     def __init__(self, newDistanceCallback):
-        self.ser = Tinyk22Con.getconnection()
+        self.ser = Tinyk22Con.getconnection(self)
         self.engineRunning = False
         self.engine = Engine(self.ser)
         self.distance = Distance(self.ser)
