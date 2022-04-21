@@ -6,12 +6,13 @@
           <div class="col-sm">
             <h7>Team 40 - HSLU - PREN 2022</h7>
             <ul style="list-style: none">
+              <li>Tim Christen</li>
               <li>Dave Brunner</li>
-              <li>Rachel Sprecher</li>
-              <li>Emanuel Wyer</li>
-              <li>Philip Seiler</li>
               <li>Tomas Prajzler</li>
               <li>Denis Saric</li>
+              <li>Philip Seiler</li>
+              <li>Rachel Sprecher</li>
+              <li>Emanuel Wyer</li>
             </ul>
           </div>
           <div class="col-sm">
@@ -19,23 +20,25 @@
             <div class="">
               <a
                 class="footer-btn"
-                href="https://www.youtube.com/channel/UCtmv4LU7WXBFtNVOQaqm8TQ"
+                href="https://www.youtube.com/c/HochschuleLuzern-HSLU"
+                target="_blank"
               >
                 <i class="fab fa-youtube"></i>
               </a>
               <a
                 class="footer-btn"
-                href="https://www.instagram.com/sportteam_bbzg_w_sursee/"
+                href="https://www.instagram.com/hslu_luzern/"
               >
                 <i class="fab fa-instagram"></i>
               </a>
               <a
                 class="footer-btn"
-                href="https://www.linkedin.com/in/dave-b-a7a158199"
+                href="https://www.linkedin.com/school/hslu-hochschule-luzern/"
+                target="_blank"
               >
                 <i class="fab fa-linkedin-in"></i>
               </a>
-              <a class="footer-btn" href="mailto:dave.brunner@protonmail.ch">
+              <a class="footer-btn" href="mailto:dave.brunner@stud.hslu.ch">
                 <i class="fa-solid fa-envelope"></i>
               </a>
             </div>
@@ -43,7 +46,9 @@
           <div class="col-sm">
             <h7>Hochschule</h7>
             <div>
+            <a href="https://www.hslu.ch/de-ch/" style="text-decoration: none;" target="_blank">
               <img src="../assets/hslu_logo.svg" style="padding-top: 15px" />
+            </a>
             </div>
           </div>
         </div>
