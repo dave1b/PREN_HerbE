@@ -99,7 +99,6 @@
       <img src="../assets/herb-e_mirror.png" width="50" class="bg-info" />
     </div>
   </div>
-  <div style="height: 150px"></div>
 </template>
 
 <script>
