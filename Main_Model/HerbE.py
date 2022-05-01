@@ -8,6 +8,7 @@ import requests
 
 # Add paths
 sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
+sys.path.insert(0, '/home/pi/Desktop/PREN/Ultrasonic_Waterproof')
 sys.path.insert(0, '/home/pi/Desktop/PREN/QR_Detection')
 sys.path.insert(0, '/home/pi/Desktop/PREN/Plant_Detection')
 sys.path.insert(0, '/home/pi/Desktop/PREN/Tinyk22_Communication')
