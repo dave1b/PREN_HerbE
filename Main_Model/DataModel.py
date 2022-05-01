@@ -40,7 +40,7 @@ HerbEstates =  {
   "initial": "HerbiE ist parkiert und am ruhen",
   "driving": "HerbE ist am fahren. Der Ultraschallsensor sucht nach Objekten und die Kamera nach QR-Codes.",
   "ultraDetected": "Herbie hat mit dem Ultraschallsensor ein Objekt erkannt",
-  "qrDetected":  "HerbiE schiesst ein Foto und sucht nach der Pflanzenart.",
+  "qrDetected":  "HerbiE hat ein QR-Code erkannt, schiesst ein Foto und sucht nach der Pflanzenart.",
   "stop":  "HerbiE hat angehalten.",
   "finished": "HerbE ist gestoppt :(",
   "goal": "Ziel erreicht!!!"

@@ -7,11 +7,15 @@ import time
 import requests
 
 # Add paths
+sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
+sys.path.insert(0, '/home/pi/Desktop/PREN/QR_Detection')
+sys.path.insert(0, '/home/pi/Desktop/PREN/Plant_Detection')
+sys.path.insert(0, '/home/pi/Desktop/PREN/Tinyk22_Communication')
+
 sys.path.insert(0, '../Ultrasonic_Waterproof')
 sys.path.insert(0, '../QR_Detection')
 sys.path.insert(0, '../Plant_Detection')
 sys.path.insert(0, '../Tinyk22_Communication')
-sys.path.insert(0, '../Button')
 
 # import custom modules
 from DataModel import DataModel, HerbEstates
@@ -21,7 +25,6 @@ from PlantApiService import PlantApiService
 from Tinyk22Interface import Tinyk22Interface
 # from Tinyk22InterfaceFake import Tinyk22Interface
 from apiKeys import plantIDkey, restAPIKey
-from Button import Button
 from Log import Logger
 
 
@@ -34,10 +37,9 @@ class HerbE:
         self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
-        self.button = Button(self.initialStartOfHerbE, self.shutdownHerbE)
         self.lastUltrasonicAlertTimestamp = time.time()
         self.lastQRcodeDetectedAlertTimestap = time.time()
-        self.minWaitingtimeBetweenAlerts = 5
+        self.minWaitingtimeBetweenAlerts = 10
         self.RESTapiURL = "https://prenh21-dbrunner.enterpriselab.ch/api/v1/updateRun"
         self.log = Logger()
         self.log.debug("HerbE - HerbE initialisiert")
