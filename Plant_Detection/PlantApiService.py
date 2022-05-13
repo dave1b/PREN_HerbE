@@ -21,7 +21,7 @@ class PlantApiService:
             return base64.b64encode(file.read()).decode("ascii")
     def detectPlant(self, firstPlantScanned):
         self.log.info("PlantApiSerice - detectPlant()")
-        image_path = '../Button/plantImage.png'
+        image_path = '/home/pi/Desktop/PREN/Button/plantImage.png'
         self.log.info("PlantApiSerice - detectPlant() 1")
         image = self.encode_file(image_path)
         self.log.info("PlantApiSerice - detectPlant() 2")
@@ -45,14 +45,19 @@ class PlantApiService:
         self.log.info("PlantApiSerice - detectPlant(): RESPONSE: " + str(response))
         response = response.json()
         recognisedPlantsList = []
+        self.log.info(response)
         imgURL = (response["images"][0]["url"])
-        self.log.info("PlantApiSerice - detectPlant(): URL" + str(imgURL))
+        self.log.info("PlantApiSerice - detectPlant() URL: " + str(imgURL))
         for suggestion in response["suggestions"]:
             if(suggestion["probability"] >= self.minProbability):
                 recognisedPlantsList.append(suggestion["plant_name"])
         if not(firstPlantScanned):
             self.dataModel.recognisedPlantsList1 = recognisedPlantsList
-            self.dataModel.commonName = response["suggestions"][0]["plant_details"]["common_names"][0]
+            try:
+                self.dataModel.commonName = response["suggestions"][0]["plant_details"]["common_names"][0]
+            except:
+                self.log.warning("Die Pflanze hat keinen common Name")
+                self.dataModel.commonName = 'gemeiner Name nicht bekannt'
             self.dataModel.plant1Type = recognisedPlantsList[0]
             self.dataModel.imageURL = imgURL
             self.log.info("PlantApiSerice - detectPlant() plantList " + str(self.dataModel.recognisedPlantsList1))
@@ -63,7 +68,6 @@ class PlantApiService:
         self.log.info("PlantApiSerice - detectPlant(): am Ende")   
 
     def findMatchingPlantInDataModel(self):
-        return False #for testing only
         matchingPlantList = list(set(self.dataModel.recognisedPlantsList1) & set(self.dataModel.recognisedPlantsListx))
         if(len(matchingPlantList) > 0):
             print("There is a match: ", True)
