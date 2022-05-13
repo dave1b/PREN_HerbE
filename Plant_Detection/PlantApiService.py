@@ -2,7 +2,11 @@ import base64
 import requests
 import sys
 sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
+sys.path.insert(0, '/home/pi/Desktop/PREN/Button')
+
 sys.path.insert(0, '../Main_Model')
+sys.path.insert(0, '../Main_Model')
+
 from Log import Logger
 
 class PlantApiService:
@@ -17,7 +21,7 @@ class PlantApiService:
             return base64.b64encode(file.read()).decode("ascii")
     def detectPlant(self, firstPlantScanned):
         self.log.info("PlantApiSerice - detectPlant()")
-        image_path = '../Main_Model/plantImage.png'
+        image_path = '../Button/plantImage.png'
         self.log.info("PlantApiSerice - detectPlant() 1")
         image = self.encode_file(image_path)
         self.log.info("PlantApiSerice - detectPlant() 2")
