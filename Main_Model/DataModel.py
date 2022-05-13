@@ -1,7 +1,6 @@
 class DataModel:
     def __init__(self):
         self.QRcodeContent = None
-        self.UltrasonicObjectDetected = False
         self.dateTimeStamp = None
         self.startTimeStamp = None
         self.endTimeStamp = 0
@@ -37,11 +36,11 @@ class DataModel:
 
 # HerbE states
 HerbEstates =  {
-  "initial": "HerbiE ist parkiert und am ruhen",
-  "driving": "HerbE ist am fahren. Der Ultraschallsensor sucht nach Objekten und die Kamera nach QR-Codes.",
-  "ultraDetected": "Herbie hat mit dem Ultraschallsensor ein Objekt erkannt",
-  "qrDetected":  "HerbiE hat ein QR-Code erkannt, schiesst ein Foto und sucht nach der Pflanzenart.",
-  "stop":  "HerbiE hat angehalten.",
-  "finished": "HerbE ist gestoppt :(",
+  "initial": "Herb-E ist parkiert und am ruhen",
+  "driving": "Herb-E ist am fahren. Der Ultraschallsensor sucht nach Objekten und die Kamera nach QR-Codes.",
+  "ultraDetected": "Herb-E hat mit dem Ultraschallsensor ein Objekt erkannt",
+  "qrDetected":  "Herb-E hat ein QR-Code erkannt, schiesst ein Foto und sucht nach der Pflanzenart.",
+  "stop":  "Herb-E hat angehalten.",
+  "finished": "Herb-E ist gestoppt :(",
   "goal": "Ziel erreicht!!!"
 }
