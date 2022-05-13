@@ -22,9 +22,8 @@ class Ultrasonic:
         while self.searchingRunning:
             distance = self.ultrasonicSensor.getDistance()
             if distance <= self.distanceThreshold:
-                self.log.debug("Ultrasonic - under threashold, meassured Distance:1 " + str(distance))
+                self.log.debug("Ultrasonic - under threashold, meassured Distance: " + str(distance))
                 self.callbackObjectDetected()
-                self.dataModel.UltrasonicObjectDetected = True
     
     def stopSearching(self):
         self.log.debug("Ultrasonic - stopSearching")
