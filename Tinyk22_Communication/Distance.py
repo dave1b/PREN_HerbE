@@ -12,12 +12,11 @@ class Distance:
 
     def getDistance(self):
         try:
-            ser = self.ser
             # sends the distance-request
             request = (bytes('distance\n', 'UTF-8'))
-            ser.write(request)
+            self.ser.write(request)
             # gets the distance back from Tinyk22
-            distance = str(ser.readline(),'utf-8')
+            distance = str(self.ser.readline(),'utf-8')
             self.log.debug("Tinyk22 Distance: getDistance() distance: " + distance)
             return distance
         except:
