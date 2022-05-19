@@ -26,7 +26,6 @@ class VideoQRCodeScanner:
         self.isRunning = True
         executor = ThreadPoolExecutor(max_workers=5)    
         while (self.isRunning):
-            #print("capture frame at " + str(datetime.now()))
             _, frame = self.cap.read()
             #cv2.imshow(frame)
             executor.submit(self.searchFrameForQR(frame))
@@ -34,10 +33,10 @@ class VideoQRCodeScanner:
     #function for searching QR-Code in Frame
     def searchFrameForQR(self, frame):
         decodedObjects = pyzbar.decode(frame)
-        # Print results
+        # Log results
         for obj in decodedObjects:
-            print('Type : ', obj.type)
-            print('Data : ', obj.data,'\n')  
+            self.log.info('QR - Type : ', obj.type)
+            self.log.info('QR - Data : ', obj.data,'\n')  
             self.log.debug("QR - QR detected: " + str(obj.data))
             self.dataModel.QRcodeContent = obj.data
             self.qrDetectedCallback()
@@ -53,13 +52,3 @@ class VideoQRCodeScanner:
         cv2.imwrite('plantImage.png',frame)
         self.log.debug("QR - takePhoto()")
         self.dataModel.plantImage = frame
-
-
-def main():
-    vsc = VideoQRCodeScanner(contrast = 20,exposure = 40)
-    print("program started")
-    vsc.startCapturingFrames()
-
-if __name__ == "__main__":
-	pass
-    #main()

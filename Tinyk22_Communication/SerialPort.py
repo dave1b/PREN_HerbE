@@ -6,15 +6,16 @@ from Log import Logger
 
 ports = serial.tools.list_ports.comports()
 serialInit = serial.Serial()
+log = Logger()
 
 portList = []
 
 for onePort in ports:
     portList.append(str(onePort))
-    self.log.debug("onePort: " + onePort)
+    log.debug("onePort: " + onePort)
 val = input("select Port: COM")
 
 for x in range(0, len(portList)):
     if portList[x].startswith("COM" + str(val)):
         portVar = "com" + str(val)
-        self.log.debug("portvar: " + portVar)
+        log.debug("portvar: " + portVar)
