@@ -24,10 +24,10 @@ class Button():
     def startButtonListener(self):
         while True: 
             if GPIO.input(16) == GPIO.HIGH:
-                self.log.info("Start-Button was pressed!")
                 if not(self.pressedBefore):
-                    self.herbE.initialStartOfHerbE()
                     self.pressedBefore = True
+                    self.log.info("Button - Starte Herb-E")
+                    self.herbE.initialStartOfHerbE()
             # elif GPIO.input(18) == GPIO.LOW:
             #     print("Start-Button was pressed!")
             #     self.herbE.shutdownHerbE
