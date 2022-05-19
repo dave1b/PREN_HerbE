@@ -24,7 +24,6 @@ class Engine:
     def engineOff(self):
         self.log.debug("Tinyk22 Engine: engineOff()")
         ser = self.ser
-
         try:
             self.updateState(ser, 'stop')
         except (RuntimeError):
@@ -38,7 +37,3 @@ class Engine:
         self.log.debug("Tinyk22 Engine: updateState()")
         changeState = (bytes(state + "\n", 'UTF-8'))
         ser.write(changeState)
-
-        readState = ser.readline().decode('utf-8')
-
-        self.log.debug("Tinyk22 Engine: updateState() Readstate: " + readState)
