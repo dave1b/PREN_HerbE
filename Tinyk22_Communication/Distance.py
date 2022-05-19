@@ -1,5 +1,8 @@
 import Tinyk22Con
 import sys
+sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
+sys.path.insert(0, '../Main_Model')
+from Log import Logger
 class Distance:
 
     def __init__(self, ser):
@@ -16,7 +19,7 @@ class Distance:
             # gets the distance back from Tinyk22
             distance = str(ser.readline(),'utf-8')
 
-            print(distance)
+            self.log.debug("Tinyk22 Distance: getDistance() distance: " + distance)
 
         finally:
-            print("")
+            #todo: self.log.error

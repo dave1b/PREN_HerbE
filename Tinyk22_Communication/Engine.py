@@ -41,4 +41,4 @@ class Engine:
 
         readState = ser.readline().decode('utf-8')
 
-        print(readState)
+        self.log.debug("Tinyk22 Engine: updateState() Readstate: " + readState)
