@@ -17,20 +17,23 @@ class Button():
     def __init__(self):
         self.herbE = HerbE()
         self.log = Logger()
-        self.pressedBefore = False
+        self.startPressedBefore = False
+        self.stopPressedBefore = False
         executor = ThreadPoolExecutor(max_workers=1)
         executor.submit(self.startButtonListener)
 
     def startButtonListener(self):
         while True: 
-            if GPIO.input(16) == GPIO.HIGH:
-                if not(self.pressedBefore):
-                    self.pressedBefore = True
-                    self.log.info("Button - Starte Herb-E")
-                    self.herbE.initialStartOfHerbE()
-            # elif GPIO.input(18) == GPIO.LOW:
-            #     print("Start-Button was pressed!")
-            #     self.herbE.shutdownHerbE
+            if GPIO.input(16) == GPIO.HIGH and not self.startPressedBefore:
+                self.startPressedBefore = True
+                self.stopPressedBefore = False
+                self.log.info("Button - Starte Herb-E")
+                self.herbE.initialStartOfHerbE()
+            elif GPIO.input(18) == GPIO.HIGH and not self.stopPressedBefore:
+                self.stopPressedBefore = True
+                self.startPressedBefore = False
+                print("Stop-Button was pressed!")
+                self.herbE.shutdownHerbE()
                 
 button = Button()
 button.startButtonListener()
