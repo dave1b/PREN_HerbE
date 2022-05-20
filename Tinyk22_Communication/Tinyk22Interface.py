@@ -29,7 +29,11 @@ class Tinyk22Interface:
     def turnEngineOff(self):
         self.log.debug("Tinyk22 Interface: engine: " + str(self.engine))
         self.engine.engineOff()
-
+        self.engineRunning = False
+        
+    def shutdownEngine(self):
+        self.log.debug("Tinyk22 Interface: shutdownEngine: " + str(self.engine))
+        self.engine.engineShutdown()
         self.engineRunning = False
 
     def receiveDistanceAndCallCallback(self):
