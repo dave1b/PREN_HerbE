@@ -38,14 +38,11 @@ class HerbE:
         self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
-        self.minWaitingtimeBetweenAlerts = 10
         self.RESTapiURL = "https://prenh21-dbrunner.enterpriselab.ch/api/v1/updateRun"
         self.log = Logger()
-        self.log.debug("HerbE - HerbE initialisiert")
+        self.log.debug("HerbE - HerbE instantiated")
 
     def initialStartOfHerbE(self):
-        self.lastUltrasonicAlertTimestamp = time.time()
-        self.lastQRcodeDetectedAlertTimestap = time.time()
         self.log.debug("HerbE - initialStartOfHerbE()")
         self.dataModel.state = HerbEstates["initial"]
         executor = ThreadPoolExecutor(max_workers=3)
@@ -80,7 +77,7 @@ class HerbE:
         self.startEngine()
 
     def newDistanceCallback(self, newDistanceDriven):
-        self.log.debug("HerbE - newDistanceCallback()")
+        self.log.debug("HerbE - distanceCallback()")
         self.dataModel.distanceDriven = int(newDistanceDriven)
         self.postDataToRestAPI()
 
@@ -92,7 +89,6 @@ class HerbE:
         Timer(5, self.startEngine).start()
 
     def qrCodeDetected(self):
-        self.lastQRcodeDetectedAlertTimestap = time.time()
         self.log.debug("HerbE - qrCodeDetected()")
         self.dataModel.state = HerbEstates["qrDetected"]
         self.videoQRCodeScanner.takePhoto()
@@ -106,7 +102,7 @@ class HerbE:
             self.postDataToRestAPI()
 
     def postDataToRestAPI(self):
-        self.log.debug("HerbE - postDataToRestAPI()")
+        #self.log.debug("HerbE - postDataToRestAPI()")
         response = (requests.put(self.RESTapiURL, json=self.dataModel.toJSON(restAPIKey))).status_code
 
     def shutdownHerbE(self):
