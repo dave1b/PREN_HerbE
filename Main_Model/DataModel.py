@@ -17,7 +17,6 @@ class DataModel:
         self.isFinished = False
         self.imageURL = ""
         
-    
     def toJSON(self, restAPIKey):
         return {
             "id": 1,
