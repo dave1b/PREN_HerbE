@@ -7,9 +7,8 @@ from Log import Logger
 from DFRobotRaspberryPiA02YYUW import DFRobotA02Distance as UltrasonicSensor
 
 class Ultrasonic:
-    def __init__(self, objectDetectedCallback, dataModel, distanceThreshold = 1000):
+    def __init__(self, objectDetectedCallback, distanceThreshold = 1000):
         self.callbackObjectDetected = objectDetectedCallback
-        self.dataModel = dataModel
         self.ultrasonicSensor = UltrasonicSensor()
         self.ultrasonicSensor.set_dis_range(0, 4500)
         self.distanceThreshold = distanceThreshold
