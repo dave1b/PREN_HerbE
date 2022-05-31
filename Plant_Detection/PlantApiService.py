@@ -29,7 +29,7 @@ class PlantApiService:
              "api_key": self.plantIDkey,
             "images": [image],
             "modifiers": ["crops_medium"],
-            "plant_language": "de",  # de not supported
+            "plant_language": "de",
             "plant_details": ["common_names"]
         }
         headers = {
