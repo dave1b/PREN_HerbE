@@ -49,7 +49,7 @@ class HerbE:
         executor.submit(self.ultrasonic.startSearching)
         executor.submit(self.videoQRCodeScanner.startCapturingFrames)
         executor.submit(self.startEngine)
-        self.dataModel.dateTimeStamp = datetime.fromtimestamp(time.time()).strftime("%d-%m-%Y, %H:%M:%S")
+        self.dataModel.dateTimeStamp = datetime.fromtimestamp(time.time()).strftime("%H:%M:%S, %d/%m/%Y")
         self.dataModel.startTimeStamp = (time.time() * 1000)  # *1000 cause of JS in Client
         self.postDataToRestAPI()
 

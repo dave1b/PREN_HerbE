@@ -145,6 +145,11 @@ export default {
         " Minuten " +
         (laufzeitInMilli % 60).toString() +
         " Sekunden";
+      if (zeitStamp > 0) {
+        var date = new Date(zeitStamp);
+        this.endZeitStamp = date.toLocaleTimeString()
+        
+      }
     },
   },
   mounted() {
