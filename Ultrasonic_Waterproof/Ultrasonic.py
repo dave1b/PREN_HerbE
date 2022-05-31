@@ -25,7 +25,9 @@ class Ultrasonic:
         while self.searchingRunning:
             distance = self.ultrasonicSensor.getDistance()
             if distance <= self.distanceThreshold:
+                # distance lower than Threshold -> check if in time
                 if(((time.time()) - self.lastUltrasonicAlertTimestamp) > self.minWaitingtimeBetweenAlerts):
+                    # if in time -> reset time and start Callback
                     self.lastUltrasonicAlertTimestamp = time.time()
                     self.log.debug("Ultrasonic - under threashold, meassured Distance: " + str(distance))
                     self.executor.submit(self.callbackObjectDetected)
