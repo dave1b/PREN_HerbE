@@ -39,6 +39,7 @@ class HerbE:
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
         self.RESTapiURL = "https://prenh21-dbrunner.enterpriselab.ch/api/v1/updateRun"
+        self.stopQRCodeContent = "Ziel"
         self.log = Logger()
         self.log.debug("HerbE - HerbE instantiated")
 
@@ -91,6 +92,12 @@ class HerbE:
     def qrCodeDetected(self):
         self.log.debug("HerbE - qrCodeDetected()")
         self.dataModel.state = HerbEstates["qrDetected"]
+        # check if finish has been reached
+        if(self.dataModel.QRcodeContent == self.stopQRCodeContent):
+            # if reached finish line -> shutdown in 5 seconds
+            self.log.debug("HerbE - finish has ben reached")
+            Timer(5, self.shutdownHerbE).start()
+            return
         self.videoQRCodeScanner.takePhoto()
         self.detectPlantInImage()
 
@@ -112,3 +119,5 @@ class HerbE:
         self.ultrasonic.stopSearching()
         self.dataModel.state = HerbEstates["finished"]
         self.dataModel.endTimeStamp = int(time.time() * 1000)  # *1000 cause of JS in Client
+        self.dataModel.isFinished = True
+        self.postDataToRestAPI()
