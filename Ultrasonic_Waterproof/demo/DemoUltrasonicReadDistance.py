@@ -11,7 +11,7 @@
 
 import sys
 import os
-from DFRobot_RaspberryPi_A02YYUW import DFRobot_A02_Distance as Board
+from DFRobotRaspberryPiA02YYUW import DFRobotA02Distance as Board
 
 if __name__ == "__main__":
   board = Board()
@@ -22,3 +22,4 @@ if __name__ == "__main__":
     distance = board.getDistance()
     #Delay time < 0.6s
     #time.sleep(0.3) 
+    print(distance)
