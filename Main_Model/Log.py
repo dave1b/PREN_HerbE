@@ -19,8 +19,3 @@ class Logger:
         logging.warning(message)
     def error(self, message):
         logging.error(message)
-    
-#logging.debug('This message is skipped as a level is set as INFO')
-#logging.info('So should this')
-#logging.warning('And this, too')
-#logging.error('Testing non-ASCII character, Ø and ö')
