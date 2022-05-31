@@ -2,7 +2,6 @@
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 import sys
-import threading
 from threading import Timer
 import time
 import requests
@@ -109,7 +108,6 @@ class HerbE:
     def postDataToRestAPI(self):
         self.log.debug("HerbE - postDataToRestAPI()")
         response = (requests.put(self.RESTapiURL, json=self.dataModel.toJSON(restAPIKey))).status_code
-        # self.log.debug("HerbE - " + str(response))
 
     def shutdownHerbE(self):
         self.log.debug("HerbE - shutdownHerbE()")
