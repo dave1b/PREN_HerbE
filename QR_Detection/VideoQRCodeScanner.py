@@ -15,12 +15,13 @@ class VideoQRCodeScanner:
         self.qrDetectedCallback = qrDetectedCallback
         self.cap = cv2.VideoCapture(0)
         self.log = Logger()
+        
         # Kameraeinstellungen setzten
         self.cap.set(cv2.CAP_PROP_CONTRAST,contrast)
         self.cap.set(cv2.CAP_PROP_EXPOSURE, exposure)
-        #self.cap.set(cv2.CAP_PROP_FPS, fps)
         self.cap.set(3,640)
         self.cap.set(4,480)
+        
         self.isRunning = False
         self.executorForCallback = ThreadPoolExecutor(max_workers=3) 
         self.executorForScanningFiles = ThreadPoolExecutor(max_workers=5)
@@ -34,23 +35,21 @@ class VideoQRCodeScanner:
         self.isRunning = True
         while (self.isRunning):
             _, frame = self.cap.read()
-            #cv2.imshow(frame)
             self.executorForScanningFiles.submit(self.searchFrameForQR(frame))
 
     #function for searching QR-Code in Frame
     def searchFrameForQR(self, frame):
         decodedObjects = pyzbar.decode(frame)
-        # Log results
         for obj in decodedObjects:
+            # if QR-Code found check timestamps
             if(((time.time()) - self.lastQRAlertTimestamp) > self.minWaitingtimeBetweenAlerts):
+                # if in time -> start callback
                 self.lastQRAlertTimestamp = time.time()
                 self.executorForCallback.submit(self.qrDetectedCallback)
-                #cv2.imwrite('test_frame_.png', frame)
-                self.log.info('QR - Type : ', obj.type)
-                self.log.info('QR - Data : ', obj.data,'\n')  
+                self.log.debug('QR - Type : ', obj.type)
+                self.log.debug('QR - Data : ', obj.data,'\n')  
                 self.log.debug("QR - QR detected: " + str(obj.data))
                 self.dataModel.QRcodeContent = obj.data
-        decodedObjects = ""
     
     def stop(self):
         self.isRunning = False
