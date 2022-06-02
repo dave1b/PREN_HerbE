@@ -1,6 +1,7 @@
 from concurrent.futures import ThreadPoolExecutor
 import time
 import sys
+from datetime import datetime
 sys.path.insert(0, '../Main_Model')
 sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
 from Log import Logger
@@ -24,11 +25,11 @@ class Ultrasonic:
         self.log.debug("Ultrasonic - startSearching()")
         while self.searchingRunning:
             distance = self.ultrasonicSensor.getDistance()
-            if distance <= self.distanceThreshold:
+            if distance < self.distanceThreshold and distance != 0:
                 # distance lower than Threshold -> check if in time
                 if(((time.time()) - self.lastUltrasonicAlertTimestamp) > self.minWaitingtimeBetweenAlerts):
-                    # if in time -> reset time and start Callback
                     self.lastUltrasonicAlertTimestamp = time.time()
+                    # if in time -> reset time and start Callback
                     self.log.debug("Ultrasonic - under threashold, meassured Distance: " + str(distance))
                     self.executor.submit(self.callbackObjectDetected)
     
