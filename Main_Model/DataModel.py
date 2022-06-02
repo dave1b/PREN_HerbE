@@ -32,6 +32,24 @@ class DataModel:
             "imageURL": self.imageURL,
             "apiKey": restAPIKey
         }
+    
+    def resetModel(self):
+        self.QRcodeContent = None
+        self.dateTimeStamp = None
+        self.startTimeStamp = None
+        self.endTimeStamp = 0
+        self.isDriving = False
+        self.state = HerbEstates["initial"]
+        self.distanceDriven = 0
+        self.plantImage = None
+        self.recognisedPlantsList1 = None
+        self.recognisedPlantsListx = None
+        self.amountOfPlantxScanned = 1
+        self.plant1Type = "noch undefiniert"
+        self.commonName = ""
+        self.plantMatchPosition = "noch undefiniert"
+        self.isFinished = False
+        self.imageURL = ""
 
 # HerbE states
 HerbEstates =  {
