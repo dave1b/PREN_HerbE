@@ -132,6 +132,10 @@ export default {
     },
     stop() {
       clearInterval(this.timer);
+      if (this.endZeitStamp > 0) {
+        var date = new Date(this.endZeitStamp);
+        this.endZeitStamp = date.toLocaleTimeString();
+      }
     },
     updateLaufzeit(zeitStamp) {
       var laufzeitInMilli = Math.floor(
@@ -145,11 +149,6 @@ export default {
         " Minuten " +
         (laufzeitInMilli % 60).toString() +
         " Sekunden";
-      if (zeitStamp > 0) {
-        var date = new Date(zeitStamp);
-        this.endZeitStamp = date.toLocaleTimeString()
-        
-      }
     },
   },
   mounted() {
