@@ -32,7 +32,7 @@ class Button():
                 self.stopPressedBefore = True
                 self.startPressedBefore = False
                 print("Stop-Button was pressed!")
-                self.herbE.shutdownHerbE()
+                self.herbE.shutdownHerbE(True)
                 
 button = Button()
 button.startButtonListener()
