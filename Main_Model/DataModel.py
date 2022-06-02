@@ -53,11 +53,11 @@ class DataModel:
 
 # HerbE states
 HerbEstates =  {
-  "initial": "Herb-E ist parkiert und am ruhen",
+  "initial": "Herb-E ist bereit für die Fahrt. Start-Knopf drücken um zu beginnen.",
   "driving": "Herb-E ist am fahren. Der Ultraschallsensor sucht nach Objekten und die Kamera nach QR-Codes.",
-  "ultraDetected": "Herb-E hat mit dem Ultraschallsensor ein Objekt erkannt",
+  "ultraDetected": "Herb-E hat mit dem Ultraschallsensor ein Objekt erkannt und sucht jetzt nach QR-Codes.",
   "qrDetected":  "Herb-E hat ein QR-Code erkannt, schiesst ein Foto und sucht nach der Pflanzenart.",
   "stop":  "Herb-E hat angehalten.",
-  "finished": "Herb-E ist gestoppt :(",
-  "goal": "Ziel erreicht!!!"
+  "stopButtonPressed": "Der Stop-Button wurde gedrückt. Herb-E ist bereit für einen erneuten Start.",
+  "goal": "Herb-E hat seine Arbeit erledigt und das Ziel erreicht!!!"
 }
