@@ -23,7 +23,6 @@ class Engine:
                 self.log.debug("EngineOn(): NameError")
 
     def engineOff(self):
-        self.log.debug("Tinyk22 Engine: engineOff()")
         try:
             self.updateState('stop')
         except (RuntimeError):
@@ -32,6 +31,7 @@ class Engine:
             self.log.debug("EngineOff(): TypeError")
         except NameError:
             self.log.debug("EngineOff(): NameError")
+        self.log.debug("Tinyk22 Engine: engineOff()")
             
     def engineShutdown(self):
         self.log.debug("EngineShutdown()")
@@ -39,6 +39,10 @@ class Engine:
         self.engineOff()
 
     def updateState(self, state):
-        self.log.debug("Tinyk22 Engine: updateState(): " + state)
         changeState = (bytes(state + "\n", 'UTF-8'))
         self.ser.write(changeState)
+        self.log.debug("Tinyk22 Engine: updateState(): " + state)
+    
+    def resetEngine(self):
+        self.shutdown = False
+        self.updateState('reset')
