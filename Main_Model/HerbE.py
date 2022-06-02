@@ -34,7 +34,7 @@ class HerbE:
         self.dataModel = DataModel()
         self.plantIDKey = plantIDkey
         self.firstPlantScanned = False
-        self.ultrasonic = Ultrasonic(self.ultrasonicObjectDetected, self.dataModel, 1000)
+        self.ultrasonic = Ultrasonic(self.ultrasonicObjectDetected, 1000)
         self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
@@ -44,6 +44,8 @@ class HerbE:
         self.log.debug("HerbE - HerbE instantiated")
 
     def initialStartOfHerbE(self):
+        self.dataModel.resetModel()
+        self.tinyk22Interface.resetComponents()
         self.log.debug("HerbE - initialStartOfHerbE()")
         self.dataModel.state = HerbEstates["initial"]
         executor = ThreadPoolExecutor(max_workers=3)
@@ -55,9 +57,9 @@ class HerbE:
         self.postDataToRestAPI()
 
     def stopEngine(self):
-        self.log.debug("HerbE - stopEngine()")
-        self.dataModel.isDriving = False
         self.tinyk22Interface.turnEngineOff()
+        self.dataModel.isDriving = False
+        self.log.debug("HerbE - stopEngine()")
         self.dataModel.state = HerbEstates["stop"]
 
     def startEngine(self):
@@ -84,8 +86,8 @@ class HerbE:
 
     def ultrasonicObjectDetected(self):
         self.log.debug("HerbE - ultrasonicObjectDetected()")
-        self.dataModel.state = HerbEstates["ultraDetected"]
         self.stopEngine()
+        self.dataModel.state = HerbEstates["ultraDetected"]
         self.postDataToRestAPI()
         Timer(5, self.startEngine).start()
 
