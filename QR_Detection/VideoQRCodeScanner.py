@@ -50,6 +50,7 @@ class VideoQRCodeScanner:
                 self.log.debug('QR - Data : ', obj.data,'\n')  
                 self.log.debug("QR - QR detected: " + str(obj.data))
                 self.dataModel.QRcodeContent = obj.data
+        decodedObjects = ""
     
     def stop(self):
         self.isRunning = False
