@@ -85,9 +85,9 @@ class HerbE:
         self.postDataToRestAPI()
 
     def ultrasonicObjectDetected(self):
+        self.dataModel.state = HerbEstates["ultraDetected"]
         self.log.debug("HerbE - ultrasonicObjectDetected()")
         self.stopEngine()
-        self.dataModel.state = HerbEstates["ultraDetected"]
         self.postDataToRestAPI()
         Timer(5, self.startEngine).start()
 
@@ -114,12 +114,15 @@ class HerbE:
         #self.log.debug("HerbE - postDataToRestAPI()")
         response = (requests.put(self.RESTapiURL, json=self.dataModel.toJSON(restAPIKey))).status_code
 
-    def shutdownHerbE(self):
+    def shutdownHerbE(self, stopButtonPressed = False):
         self.log.debug("HerbE - shutdownHerbE()")
         self.tinyk22Interface.shutdownEngine()
         self.videoQRCodeScanner.stop()
         self.ultrasonic.stopSearching()
-        self.dataModel.state = HerbEstates["finished"]
+        if(stopButtonPressed):
+            self.dataModel.state = HerbEstates["stopButtonPressed"]
+        else:
+            self.dataModel.state = HerbEstates["goal"]
         self.dataModel.endTimeStamp = int(time.time() * 1000)  # *1000 cause of JS in Client
         self.dataModel.isFinished = True
         self.postDataToRestAPI()
