@@ -28,7 +28,7 @@ class Button():
                 self.stopPressedBefore = False
                 self.log.info("Button - Starte Herb-E")
                 self.herbE.initialStartOfHerbE()
-            elif GPIO.input(18) == GPIO.HIGH and not self.stopPressedBefore:
+            elif GPIO.input(18) == GPIO.HIGH and not self.stopPressedBefore and self.startPressedBefore:
                 self.stopPressedBefore = True
                 self.startPressedBefore = False
                 print("Stop-Button was pressed!")
