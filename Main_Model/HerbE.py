@@ -89,7 +89,7 @@ class HerbE:
         self.log.debug("HerbE - ultrasonicObjectDetected()")
         self.stopEngine()
         self.postDataToRestAPI()
-        Timer(5, self.startEngine).start()
+        Timer(1.5, self.startEngine).start()
 
     def qrCodeDetected(self):
         self.log.debug("HerbE - qrCodeDetected()")
