@@ -15,8 +15,6 @@ class PlantApiService:
         self.image_path = '/home/pi/Desktop/PREN/Button/plantImage.png'
         self.log = Logger()
         
-    
-        
     def detectPlant(self, firstPlantScanned):
         self.log.debug("PlantApiSerice - detectPlant()")
         
@@ -26,13 +24,13 @@ class PlantApiService:
         # plantID request  
         response = self.sendRequestToPlantid(self, self.plantIDkey, image)
         self.log.debug("PlantApiSerice - detectPlant(): RESPONSE: " + str(response))
-        
         response = response.json()
-        recognisedPlantsList = []
-        
+
+        #read imgURL from respose
         imgURL = (response["images"][0]["url"])
         
         # iterate over all suggestions in response and append to recognisedPlantsList
+        recognisedPlantsList = []
         for suggestion in response["suggestions"]:
             if(suggestion["probability"] >= self.minProbability):
                 recognisedPlantsList.append(suggestion["plant_name"])
