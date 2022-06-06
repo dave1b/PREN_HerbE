@@ -36,12 +36,11 @@ class VideoQRCodeScanner:
         decodedObjects = pyzbar.decode(frame)
         for obj in decodedObjects:
             # if QR-Code data is different last
-            if(self.lastQRContent != obj.data):
-                self.lastQRContent = obj.data
+            if(self.dataModel.QRcodeContent != obj.data):
+                self.dataModel.QRcodeContent = obj.data
                 self.executorForCallback.submit(self.qrDetectedCallback)
                 self.log.debug('QR-Type : ' + obj.type)
                 self.log.debug('QR-Data : ' + str(obj.data))  
-                self.dataModel.QRcodeContent = obj.data
         decodedObjects = ""
     
     def stop(self):
