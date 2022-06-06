@@ -42,19 +42,21 @@ class HerbE:
             self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(
             self.plantIDKey, self.dataModel, float(self.herbEConfig["plantMinProbability"]))
-        self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
+        self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback, int(self.herbEConfig["distanceTimerInterval"]))
         self.log = Logger("HerbE")
         self.log.debug("HerbE instantiated")
+        self.dataModel.state = HerbEstates["initial"]
+        self.postDataToRestAPI()
 
     def initialStartOfHerbE(self):
         self.dataModel.resetModel()
         self.tinyk22Interface.resetComponents()
         self.log.debug("initialStartOfHerbE()")
-        self.dataModel.state = HerbEstates["initial"]
         executor = ThreadPoolExecutor(max_workers=3)
         executor.submit(self.ultrasonic.startSearching)
         executor.submit(self.videoQRCodeScanner.startCapturingFrames)
         executor.submit(self.startEngine)
+        self.dataModel.state = HerbEstates["driving"]
         self.dataModel.dateTimeStamp = datetime.fromtimestamp(
             time.time()).strftime("%H:%M:%S, %d/%m/%Y")
         self.dataModel.startTimeStamp = (
