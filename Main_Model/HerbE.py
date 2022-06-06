@@ -40,13 +40,13 @@ class HerbE:
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
         self.RESTapiURL = "https://prenh21-dbrunner.enterpriselab.ch/api/v1/updateRun"
         self.stopQRCodeContent = "Ziel"
-        self.log = Logger()
-        self.log.debug("HerbE - HerbE instantiated")
+        self.log = Logger("HerbE")
+        self.log.debug("HerbE instantiated")
 
     def initialStartOfHerbE(self):
         self.dataModel.resetModel()
         self.tinyk22Interface.resetComponents()
-        self.log.debug("HerbE - initialStartOfHerbE()")
+        self.log.debug("initialStartOfHerbE()")
         self.dataModel.state = HerbEstates["initial"]
         executor = ThreadPoolExecutor(max_workers=3)
         executor.submit(self.ultrasonic.startSearching)
@@ -59,17 +59,17 @@ class HerbE:
     def stopEngine(self):
         self.tinyk22Interface.turnEngineOff()
         self.dataModel.isDriving = False
-        self.log.debug("HerbE - stopEngine()")
+        self.log.debug("stopEngine()")
         self.dataModel.state = HerbEstates["stop"]
 
     def startEngine(self):
-        self.log.debug("HerbE - startEngine()")
+        self.log.debug("startEngine()")
         self.dataModel.isDriving = True
         self.tinyk22Interface.turnEngineOn()
         self.dataModel.state = HerbEstates["driving"]
 
     def detectPlantInImage(self):
-        self.log.debug("HerbE - detectPlantInImage()")
+        self.log.debug("detectPlantInImage()")
         self.plantApiService.detectPlant(self.firstPlantScanned)
         if not (self.firstPlantScanned):
             self.firstPlantScanned = True
@@ -80,31 +80,31 @@ class HerbE:
         self.startEngine()
 
     def newDistanceCallback(self, newDistanceDriven):
-        self.log.debug("HerbE - distanceCallback()")
+        self.log.debug("distanceCallback()")
         self.dataModel.distanceDriven = int(newDistanceDriven)
         self.postDataToRestAPI()
 
     def ultrasonicObjectDetected(self):
         self.dataModel.state = HerbEstates["ultraDetected"]
-        self.log.debug("HerbE - ultrasonicObjectDetected()")
+        self.log.debug("ultrasonicObjectDetected()")
         self.stopEngine()
         self.postDataToRestAPI()
         Timer(1.5, self.startEngine).start()
 
     def qrCodeDetected(self):
-        self.log.debug("HerbE - qrCodeDetected()")
+        self.log.debug("qrCodeDetected()")
         self.dataModel.state = HerbEstates["qrDetected"]
         # check if finish has been reached
         if(self.dataModel.QRcodeContent == self.stopQRCodeContent):
             # if reached finish line -> shutdown in 5 seconds
-            self.log.debug("HerbE - finish has ben reached")
+            self.log.debug("finish has ben reached")
             Timer(5, self.shutdownHerbE).start()
             return
         self.videoQRCodeScanner.takePhoto()
         self.detectPlantInImage()
 
     def findMatchingPlant(self):
-        self.log.debug("HerbE - findMatchingPlant()")
+        self.log.debug("findMatchingPlant()")
         didFindMatch = False
         didFindMatch = self.plantApiService.findMatchingPlantInDataModel()
         if (didFindMatch):
@@ -115,7 +115,7 @@ class HerbE:
         response = (requests.put(self.RESTapiURL, json=self.dataModel.toJSON(restAPIKey))).status_code
 
     def shutdownHerbE(self, stopButtonPressed = False):
-        self.log.debug("HerbE - shutdownHerbE()")
+        self.log.debug("shutdownHerbE()")
         self.tinyk22Interface.shutdownEngine()
         self.videoQRCodeScanner.stop()
         self.ultrasonic.stopSearching()

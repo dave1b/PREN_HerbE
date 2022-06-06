@@ -18,31 +18,31 @@ class Tinyk22Interface:
         self.timerInterval = 1
         self.thread = Timer(self.timerInterval, self.func_wrapper)
         self.newDistanceCallback = newDistanceCallback
-        self.log = Logger()
+        self.log = Logger("Tinyk22Interface")
 
     def turnEngineOn(self):
-        self.log.debug("Tinyk22 Interface: turnEngineOn()")
+        self.log.debug("turnEngineOn()")
         self.engine.engineOn()
         self.engineRunning = True
         self.startIntervalTime()
 
     def turnEngineOff(self):
         self.engine.engineOff()
-        self.log.debug("Tinyk22 Interface: engine: " + str(self.engine))
+        self.log.debug("engine: " + str(self.engine))
         self.engineRunning = False
         
     def shutdownEngine(self):
-        self.log.debug("Tinyk22 Interface: shutdownEngine: " + str(self.engine))
+        self.log.debug("shutdownEngine: " + str(self.engine))
         self.engine.engineShutdown()
         self.engineRunning = False
 
     def receiveDistanceAndCallCallback(self):
-        self.log.debug("Tinyk22 Interface: receiveDistanceAndCallCallback()")
+        self.log.debug("receiveDistanceAndCallCallback()")
         distance = self.distance.getDistance()
         self.newDistanceCallback(distance)
 
     def func_wrapper(self):
-        self.log.debug("Tinyk22 Interface: func_wrapper()")
+        self.log.debug("func_wrapper()")
         if (self.engineRunning):
             self.receiveDistanceAndCallCallback()
             self.thread = Timer(self.timerInterval, self.func_wrapper)
@@ -52,7 +52,7 @@ class Tinyk22Interface:
             self.thread.cancel()
 
     def startIntervalTime(self):
-        self.log.debug("Tinyk22 Interface: startIntervalTime()")
+        self.log.debug("startIntervalTime()")
         if not (self.thread.is_alive()):
             self.thread = Timer(self.timerInterval, self.func_wrapper)
             self.thread.start()

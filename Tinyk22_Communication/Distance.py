@@ -8,7 +8,7 @@ class Distance:
 
     def __init__(self, ser):
         self.ser = ser
-        self.log = Logger()
+        self.log = Logger("Distance")
 
     def getDistance(self):
         try:
@@ -17,7 +17,7 @@ class Distance:
             self.ser.write(request)
             # gets the distance back from Tinyk22
             distance = str(self.ser.readline(),'utf-8')
-            self.log.debug("Tinyk22 Distance: getDistance() distance: " + distance)
+            self.log.debug("getDistance() distance: " + distance)
             return distance
         except:
-            self.log.error("Tinyk22 Distance - error occured")
+            self.log.error("error occured")

@@ -1,21 +1,26 @@
 import logging
 import sys
 
+
 class Logger:
-    def __init__(self):
+    def __init__(self, name=""):
         logging.basicConfig(
-        level=logging.DEBUG,
-        format="%(asctime)s [%(levelname)s] ---- %(message)s",
-        handlers=[
-        logging.FileHandler("debug.log"),
-        logging.StreamHandler(sys.stdout)
-        ])
-        
+            level=logging.DEBUG,
+            format="%(asctime)s [%(levelname)s] %(name)s --- %(message)s",
+            handlers=[
+                logging.FileHandler("debug.log"),
+                logging.StreamHandler(sys.stdout)
+            ])
+        self.logging = logging.getLogger(name)
+
     def debug(self, message):
-        logging.debug(message)
+        self.logging.debug(message)
+
     def info(self, message):
-        logging.info(message)
+        self.logging.info(message)
+
     def warning(self, message):
-        logging.warning(message)
+        self.logging.warning(message)
+
     def error(self, message):
-        logging.error(message)
+        self.logging.error(message)

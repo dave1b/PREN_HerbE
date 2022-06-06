@@ -13,7 +13,7 @@ class VideoQRCodeScanner:
         self.dataModel = dataModel
         self.qrDetectedCallback = qrDetectedCallback
         self.cap = cv2.VideoCapture(0)
-        self.log = Logger()
+        self.log = Logger("VideoQRCodeScanner")
         
         # Kameraeinstellungen setzten
         self.cap.set(cv2.CAP_PROP_CONTRAST,contrast)
@@ -27,7 +27,7 @@ class VideoQRCodeScanner:
         self.executorForScanningFiles = ThreadPoolExecutor(max_workers=5)
 
     def startCapturingFrames(self):   
-        self.log.debug("QR - startCapturingFrames()")
+        self.log.debug("startCapturingFrames()")
         self.isRunning = True
         while (self.isRunning):
             _, frame = self.cap.read()
@@ -41,8 +41,8 @@ class VideoQRCodeScanner:
             if(self.lastQRContent != obj.data):
                 self.lastQRContent = obj.data
                 self.executorForCallback.submit(self.qrDetectedCallback)
-                self.log.debug('QR - Type : ' + obj.type)
-                self.log.debug('QR - Data : ' + str(obj.data))  
+                self.log.debug('QR-Type : ' + obj.type)
+                self.log.debug('QR-Data : ' + str(obj.data))  
                 self.dataModel.QRcodeContent = obj.data
         decodedObjects = ""
     
@@ -50,7 +50,7 @@ class VideoQRCodeScanner:
         self.isRunning = False
 
     def takePhoto(self):
-        self.log.debug("QR - takePhoto()")
+        self.log.debug("takePhoto()")
         _, frame = self.cap.read()
         cv2.imwrite('plantImage.png',frame)
         self.dataModel.plantImage = frame

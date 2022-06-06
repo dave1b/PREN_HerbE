@@ -13,17 +13,17 @@ class PlantApiService:
         self.plantIDkey = plantIDkey
         self.minProbability = minProbability
         self.image_path = '/home/pi/plantImage.png'
-        self.log = Logger()
+        self.log = Logger("PlantApiService")
         
     def detectPlant(self, firstPlantScanned):
-        self.log.debug("PlantApiSerice - detectPlant()")
+        self.log.debug("detectPlant()")
         
         # Base64 encode image
         image = self.encode_file(self.image_path)
 
         # plantID request  
         response = self.sendRequestToPlantid(self, self.plantIDkey, image)
-        self.log.debug("PlantApiSerice - detectPlant(): RESPONSE: " + str(response))
+        self.log.debug("detectPlant(): RESPONSE: " + str(response))
         response = response.json()
 
         #read imgURL from respose
@@ -45,16 +45,16 @@ class PlantApiService:
                 self.dataModel.commonName = 'gemeiner Name nicht bekannt'
             self.dataModel.plant1Type = recognisedPlantsList[0]
             self.dataModel.imageURL = imgURL
-            self.log.debug("PlantApiSerice - detectPlant() plantList " + str(self.dataModel.recognisedPlantsList1))
-            self.log.debug("PlantApiSerice - detectPlant() plant1Type " + str(self.dataModel.plant1Type))
+            self.log.debug("detectPlant() plantList " + str(self.dataModel.recognisedPlantsList1))
+            self.log.debug("detectPlant() plant1Type " + str(self.dataModel.plant1Type))
         # if not first plant -> write recognisedPlantsList to DataModel
         else:
             self.dataModel.recognisedPlantsListx = recognisedPlantsList
-            self.log.debug("PlantApiSerice - detectPlant() recognisedPlantsListx " + str(self.dataModel.recognisedPlantsListx))
-        self.log.debug("PlantApiSerice - detectPlant(): am Ende")   
+            self.log.debug("detectPlant() recognisedPlantsListx " + str(self.dataModel.recognisedPlantsListx))
+        self.log.debug("detectPlant(): am Ende")   
         
     def encode_file(self, file_name):
-        self.log.debug("PlantApiSerice - encode_file()")
+        self.log.debug("encode_file()")
         with open(file_name, "rb") as file:
             return base64.b64encode(file.read()).decode("ascii")
 
@@ -69,14 +69,14 @@ class PlantApiService:
         headers = {
             "Content-Type": "application/json"
         }
-        self.log.debug("PlantApiSerice - detectPlant(): before post")
+        self.log.debug("detectPlant(): before post")
         return requests.post("https://api.plant.id/v2/identify",
                                  json=params,
                                  headers=headers)
         
     
     def findMatchingPlantInDataModel(self):
-        self.log.debug("PlantApiSerice - findMatchingPlantInDataModel()")
+        self.log.debug("findMatchingPlantInDataModel()")
         
         # check if matching plants in lists
         matchingPlantList = list(set(self.dataModel.recognisedPlantsList1) & set(self.dataModel.recognisedPlantsListx))

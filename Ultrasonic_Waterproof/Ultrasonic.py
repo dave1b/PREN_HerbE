@@ -14,15 +14,15 @@ class Ultrasonic:
         self.ultrasonicSensor.set_dis_range(0, 4500)
         self.distanceThreshold = distanceThreshold
         self.searchingRunning = False
-        self.log = Logger()
-        self.log.debug("Ultrasonic - initialisiert")
+        self.log = Logger("Ultrasonic")
+        self.log.debug("initialisiert")
         self.executor = ThreadPoolExecutor(max_workers=3)
     
     def startSearching(self):
         self.lastUltrasonicAlertTimestamp = time.time()
         self.minWaitingtimeBetweenAlerts = 12
         self.searchingRunning = True
-        self.log.debug("Ultrasonic - startSearching()")
+        self.log.debug("startSearching()")
         while self.searchingRunning:
             distance = self.ultrasonicSensor.getDistance()
             if distance < self.distanceThreshold and distance != 0:
@@ -30,9 +30,9 @@ class Ultrasonic:
                 if(((time.time()) - self.lastUltrasonicAlertTimestamp) > self.minWaitingtimeBetweenAlerts):
                     self.lastUltrasonicAlertTimestamp = time.time()
                     # if in time -> reset time and start Callback
-                    self.log.debug("Ultrasonic - under threashold, meassured Distance: " + str(distance))
+                    self.log.debug("under threashold, meassured Distance: " + str(distance))
                     self.executor.submit(self.callbackObjectDetected)
     
     def stopSearching(self):
-        self.log.debug("Ultrasonic - stopSearching")
+        self.log.debug("stopSearching")
         self.searchingRunning = False

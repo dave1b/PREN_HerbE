@@ -15,7 +15,7 @@ GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) # Set pin 18 to be an input 
 class Button():
     def __init__(self):
         self.herbE = HerbE()
-        self.log = Logger()
+        self.log = Logger("Button")
         self.startPressedBefore = False
         self.stopPressedBefore = False
         executor = ThreadPoolExecutor(max_workers=1)
@@ -26,12 +26,12 @@ class Button():
             if GPIO.input(16) == GPIO.HIGH and not self.startPressedBefore:
                 self.startPressedBefore = True
                 self.stopPressedBefore = False
-                self.log.info("Button - Starte Herb-E")
+                self.log.info("Start-Button was pressed!")
                 self.herbE.initialStartOfHerbE()
             elif GPIO.input(18) == GPIO.HIGH and not self.stopPressedBefore and self.startPressedBefore:
                 self.stopPressedBefore = True
                 self.startPressedBefore = False
-                print("Stop-Button was pressed!")
+                self.log.info("Stop-Button was pressed!")
                 self.herbE.shutdownHerbE(True)
                 
 button = Button()
