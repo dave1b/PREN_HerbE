@@ -1,4 +1,6 @@
 # PREN_HerbE
+Python-based repostiory for an autonomous driving roboter. The roboter can autonomously drive along a parcour and recognise qr-codes and plants along the way.
+
 Code for PREN22: Processing of Video input, Scanning for QR-Codes, Plant Detection, Ultrasonicsensoring on a RaspberryPi
 
 ### Linked code to this project:
