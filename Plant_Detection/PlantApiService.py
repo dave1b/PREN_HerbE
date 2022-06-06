@@ -10,17 +10,16 @@ class PlantApiService:
         self.dataModel = dataModel
         self.plantIDkey = plantIDkey
         self.minProbability = minProbability
-        self.image_path = '../Button/plantImage.png'
+        self.image_path = 'plantImage.png'
         self.log = Logger("PlantApiService")
         
     def detectPlant(self, firstPlantScanned):
         self.log.debug("detectPlant()")
-        
         # Base64 encode image
         image = self.encode_file(self.image_path)
 
         # plantID request  
-        response = self.sendRequestToPlantid(self, self.plantIDkey, image)
+        response = self.sendRequestToPlantid(self.plantIDkey, image)
         self.log.debug("detectPlant(): RESPONSE: " + str(response))
         response = response.json()
 
