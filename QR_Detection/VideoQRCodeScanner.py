@@ -23,32 +23,31 @@ class VideoQRCodeScanner:
         self.cap.set(4,480)
         
         self.isRunning = False
+        self.lastQRContent = ""
         self.executorForCallback = ThreadPoolExecutor(max_workers=3) 
         self.executorForScanningFiles = ThreadPoolExecutor(max_workers=5)
-        self.lastQRAlertTimestamp = 0
-        self.minWaitingtimeBetweenAlerts = 12
 
-   
-
-        
     def startCapturingFrames(self):   
         self.isRunning = True
         while (self.isRunning):
             _, frame = self.cap.read()
-            self.executorForScanningFiles.submit(self.searchFrameForQR(frame))
+            self.executorForScanningFiles.submit(self.searchFrameForQR, frame)
 
     #function for searching QR-Code in Frame
     def searchFrameForQR(self, frame):
         decodedObjects = pyzbar.decode(frame)
+        # log frame here
+        self.log.info('QR -  : searchFramForQR()')
         for obj in decodedObjects:
-            # if QR-Code found check timestamps
-            if(((time.time()) - self.lastQRAlertTimestamp) > self.minWaitingtimeBetweenAlerts):
-                # if in time -> start callback
-                self.lastQRAlertTimestamp = time.time()
-                self.executorForCallback.submit(self.qrDetectedCallback)
-                self.log.debug('QR - Type : ', obj.type)
-                self.log.debug('QR - Data : ', obj.data,'\n')  
-                self.log.debug("QR - QR detected: " + str(obj.data))
+            # if QR-Code data is different last
+            self.log.info('11111111 QR - Type : ', self.lastQRContent)
+            self.log.info('QR - Type : ', self.lastQRContent)
+            if(self.lastQRContent != obj.data):
+                self.lastQRContent = obj.data
+                #self.executorForCallback.submit(self.qrDetectedCallback)
+                self.log.info('QR - Type : ', obj.type)
+                self.log.info('QR - Data : ', obj.data,'\n')  
+                self.log.info("QR - QR detected: " + str(obj.data))
                 self.dataModel.QRcodeContent = obj.data
         decodedObjects = ""
     
