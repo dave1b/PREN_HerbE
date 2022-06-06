@@ -16,11 +16,11 @@ Code for PREN22: Processing of Video input, Scanning for QR-Codes, Plant Detecti
 pip3 install pyzbar
 pip3 install opencv-python
 ```
-5.  Start Programm by executing Button.py 
+4.  Start Programm by executing Button.py 
 ```
 python3 Button/Button.py
 ```
-6. The keys are now listening to be pressed
+5. The keys are now listening to be pressed
  
 
 
