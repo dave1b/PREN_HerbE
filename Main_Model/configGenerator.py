@@ -11,7 +11,6 @@ config_object["HERBECONFIG"] = {
     "qrContentOfFinish": "Ziel",
     "afterUltraDetectedRestartHerbETimeInSeconds": 1,
     "shutdownAfterFinishQRcodeTimeInSeconds": 5,
-    "plantImgPath": "/home/pi/plantImage.png",
     "cameraContrast": 20,
     "camerExposure": 40,
     "getDistanceIntervalTimeInSeconds": 1,
