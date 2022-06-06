@@ -8,7 +8,7 @@ class Logger:
             level=logging.DEBUG,
             format="%(asctime)s [%(levelname)s] %(name)s --- %(message)s",
             handlers=[
-                logging.FileHandler("debug.log"),
+                logging.FileHandler("HerbE.log"),
                 logging.StreamHandler(sys.stdout)
             ])
         self.logging = logging.getLogger(name)
