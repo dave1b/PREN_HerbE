@@ -10,7 +10,10 @@ Code for PREN22: Processing of Video input, Scanning for QR-Codes, Plant Detecti
 
 ## How to use code
 1. clone Repository on a RaspberryPi
-2. change to Project-Directory ("/home/xy/PREN_HerbE")
+2. change to Project-Directory
+```
+cd /home/{username}/PREN_HerbE
+```
 3. Install the following pip3 packages:
 ```
 pip3 install pyzbar
