@@ -1,5 +1,6 @@
 # import modules
 from concurrent.futures import ThreadPoolExecutor
+from configparser import ConfigParser
 from datetime import datetime
 import sys
 from threading import Timer
@@ -31,15 +32,25 @@ from Log import Logger
 
 class HerbE:
     def __init__(self):
-        self.dataModel = DataModel()
-        self.plantIDKey = plantIDkey
+        #reading variables from config
+        self.config_object = ConfigParser()
+        self.config_object.read("config.ini")
+        self.herbEConfig = self.config_object["HERBECONFIG"]
+        self.plantIDKey = self.herbEConfig["plantIDkey"]
+        self.restAPIKey = self.herbEConfig["restAPIKey"]
+        self.RESTapiURL = self.herbEConfig["restAPIURL"]
+        self.stopQRCodeContent = self.herbEConfig["qrContentOfFinish"]
+        self.startEngineAfterUltraDetectedThreshold = self.herbEConfig["afterUltraDetectedRestartHerbETimeInSeconds"]
         self.firstPlantScanned = False
-        self.ultrasonic = Ultrasonic(self.ultrasonicObjectDetected, 1000)
-        self.videoQRCodeScanner = VideoQRCodeScanner(self.qrCodeDetected, self.dataModel)
-        self.plantApiService = PlantApiService(self.plantIDKey, self.dataModel, 0.025)
+        # instantiate components
+        self.dataModel = DataModel()
+        self.ultrasonic = Ultrasonic(
+            self.ultrasonicObjectDetected, self.herbEConfig["ultrasonicDistanceThresholdInMM"])
+        self.videoQRCodeScanner = VideoQRCodeScanner(
+            self.qrCodeDetected, self.dataModel)
+        self.plantApiService = PlantApiService(
+            self.plantIDKey, self.dataModel, self.herbEConfig["plantMinProbability"])
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
-        self.RESTapiURL = "https://prenh21-dbrunner.enterpriselab.ch/api/v1/updateRun"
-        self.stopQRCodeContent = "Ziel"
         self.log = Logger("HerbE")
         self.log.debug("HerbE instantiated")
 
@@ -52,8 +63,10 @@ class HerbE:
         executor.submit(self.ultrasonic.startSearching)
         executor.submit(self.videoQRCodeScanner.startCapturingFrames)
         executor.submit(self.startEngine)
-        self.dataModel.dateTimeStamp = datetime.fromtimestamp(time.time()).strftime("%H:%M:%S, %d/%m/%Y")
-        self.dataModel.startTimeStamp = (time.time() * 1000)  # *1000 cause of JS in Client
+        self.dataModel.dateTimeStamp = datetime.fromtimestamp(
+            time.time()).strftime("%H:%M:%S, %d/%m/%Y")
+        self.dataModel.startTimeStamp = (
+            time.time() * 1000)  # *1000 cause of JS in Client
         self.postDataToRestAPI()
 
     def stopEngine(self):
@@ -89,7 +102,7 @@ class HerbE:
         self.log.debug("ultrasonicObjectDetected()")
         self.stopEngine()
         self.postDataToRestAPI()
-        Timer(1.5, self.startEngine).start()
+        Timer(self.startEngineAfterUltraDetectedThreshold, self.startEngine).start()
 
     def qrCodeDetected(self):
         self.log.debug("qrCodeDetected()")
@@ -98,7 +111,7 @@ class HerbE:
         if(self.dataModel.QRcodeContent == self.stopQRCodeContent):
             # if reached finish line -> shutdown in 5 seconds
             self.log.debug("finish has ben reached")
-            Timer(5, self.shutdownHerbE).start()
+            Timer(self.herbEConfig["shutdownAfterFinishQRcodeTimeInSeconds"], self.shutdownHerbE).start()
             return
         self.videoQRCodeScanner.takePhoto()
         self.detectPlantInImage()
@@ -111,10 +124,10 @@ class HerbE:
             self.postDataToRestAPI()
 
     def postDataToRestAPI(self):
-        #self.log.debug("HerbE - postDataToRestAPI()")
-        response = (requests.put(self.RESTapiURL, json=self.dataModel.toJSON(restAPIKey))).status_code
+        requests.put(self.RESTapiURL,
+                    json=self.dataModel.toJSON(self.restAPIKey))
 
-    def shutdownHerbE(self, stopButtonPressed = False):
+    def shutdownHerbE(self, stopButtonPressed=False):
         self.log.debug("shutdownHerbE()")
         self.tinyk22Interface.shutdownEngine()
         self.videoQRCodeScanner.stop()
@@ -123,6 +136,7 @@ class HerbE:
             self.dataModel.state = HerbEstates["stopButtonPressed"]
         else:
             self.dataModel.state = HerbEstates["goal"]
-        self.dataModel.endTimeStamp = int(time.time() * 1000)  # *1000 cause of JS in Client
+        self.dataModel.endTimeStamp = int(
+            time.time() * 1000)  # *1000 cause of JS in Client
         self.dataModel.isFinished = True
         self.postDataToRestAPI()
