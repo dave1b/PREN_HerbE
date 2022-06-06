@@ -12,7 +12,7 @@ class PlantApiService:
         self.dataModel = dataModel
         self.plantIDkey = plantIDkey
         self.minProbability = minProbability
-        self.image_path = '/home/pi/Desktop/PREN/Button/plantImage.png'
+        self.image_path = '/home/pi/plantImage.png'
         self.log = Logger()
         
     def detectPlant(self, firstPlantScanned):
