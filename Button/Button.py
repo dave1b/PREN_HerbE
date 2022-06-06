@@ -22,7 +22,7 @@ class Button():
 
     def startButtonListener(self):
         while True:
-            if GPIO.input(16) == GPIO.HIGH and not self.startPressedBefore:
+            if GPIO.input(16) == GPIO.HIGH and not self.startPressedBefore and not GPIO.input(18) == GPIO.HIGH:
                 self.startPressedBefore = True
                 self.stopPressedBefore = False
                 self.log.info("Start-Button was pressed!")
