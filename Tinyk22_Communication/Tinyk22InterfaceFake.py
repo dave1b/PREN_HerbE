@@ -4,14 +4,14 @@ sys.path.insert(0, 'Main_Model')
 from Log import Logger
 
 class Tinyk22Interface:
-    def __init__(self, newDistanceCallback):
+    def __init__(self, newDistanceCallback, distanceTimerInterval = 1):
         self.log = Logger("Tinyk22InterfaceFake")
         #self.ser = Tinyk22Con.getconnection()
         self.engineRunning = False
         #self.engine = Engine(self.ser)
         self.distance = 0
-        self.timerInterval = 10
-        self.thread = Timer(self.timerInterval, self.func_wrapper)
+        self.distanceTimerInterval = 10
+        self.thread = Timer(self.distanceTimerInterval, self.func_wrapper)
         self.newDistanceCallback = newDistanceCallback
 
     def turnEngineOn(self):
@@ -35,14 +35,16 @@ class Tinyk22Interface:
         if(self.engineRunning):
             self.log.debug("startIntervalTime() if(self.engineRunning)")
             self.receiveDistanceAndCallCallback()
-            self.thread = Timer(self.timerInterval, self.func_wrapper)
-            self.thread.start()
+            self.thread = Timer(self.distanceTimerInterval, self.func_wrapper)
+            if not (self.thread.is_alive()):
+                self.thread.start()
         else:
-            return
+            self.thread.cancel()
 
     def startIntervalTime(self):
         self.log.debug("startIntervalTime()")
         if not(self.thread.is_alive()):
+            self.thread = Timer(self.distanceTimerInterval, self.func_wrapper)
             self.thread.start()
         
     def shutdownEngine(self):

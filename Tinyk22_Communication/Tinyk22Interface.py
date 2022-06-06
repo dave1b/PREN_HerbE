@@ -9,12 +9,12 @@ from Log import Logger
 
 
 class Tinyk22Interface:
-    def __init__(self, newDistanceCallback):
+    def __init__(self, newDistanceCallback, distanceTimerInterval):
         self.ser = Tinyk22Con.getconnection(self)
         self.engineRunning = False
         self.engine = Engine(self.ser)
         self.distance = Distance(self.ser)
-        self.timerInterval = 1
+        self.timerInterval = distanceTimerInterval
         self.thread = Timer(self.timerInterval, self.func_wrapper)
         self.newDistanceCallback = newDistanceCallback
         self.log = Logger("Tinyk22Interface")
