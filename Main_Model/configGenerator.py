@@ -15,6 +15,7 @@ config_object["HERBECONFIG"] = {
     "camerExposure": 40,
     "getDistanceIntervalTimeInSeconds": 1,
     "ultrasonicTimeThresholdBetweenInSeconds": 12,
+    "distanceTimerInterval": 1,
     "plantIDkey": "",
     "restAPIKey": ""
 }
