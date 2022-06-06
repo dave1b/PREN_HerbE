@@ -1,9 +1,10 @@
 # PREN_HerbE
 Code for PREN22: Processing of Video input, Scanning for QR-Codes, Plant Detection, Ultrasonicsensoring on a RaspberryPi
 
-### Linked code for PREN-Projekt:
+### Linked code to this project:
 - node.js REST-API -> [PREN_restAPI](https://github.com/dave1b/PREN_restAPI)
 - vue.js website -> [PREN_website](https://github.com/dave1b/PREN_website)
+<br>
 
 ## How to use code
 1. clone Repository on a RaspberryPi
