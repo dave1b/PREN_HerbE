@@ -41,7 +41,14 @@ class Tinyk22Interface:
             return
 
     def startIntervalTime(self):
+        return
         self.log.debug("Tinyk22 Interface: startIntervalTime()")
         if not(self.thread.is_alive()):
             self.thread.start()
         
+    def shutdownEngine(self):
+        self.log.debug("Tinyk22 Interface: shutdownEngine: ")
+        self.engineRunning = False
+    
+    def resetComponents(self):
+        self.engineRunning = False
