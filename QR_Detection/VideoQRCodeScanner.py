@@ -9,9 +9,8 @@ sys.path.insert(0, '../Main_Model')
 from Log import Logger
 
 class VideoQRCodeScanner:
-    def __init__(self, qrDetectedCallback, dataModel, contrast = 20,exposure = 40):
+    def __init__(self, qrDetectedCallback, dataModel, contrast = 20, exposure = 40):
         self.dataModel = dataModel
-        self.detector = cv2.QRCodeDetector()
         self.qrDetectedCallback = qrDetectedCallback
         self.cap = cv2.VideoCapture(0)
         self.log = Logger()
@@ -28,6 +27,7 @@ class VideoQRCodeScanner:
         self.executorForScanningFiles = ThreadPoolExecutor(max_workers=5)
 
     def startCapturingFrames(self):   
+        self.log.debug("QR - startCapturingFrames()")
         self.isRunning = True
         while (self.isRunning):
             _, frame = self.cap.read()
@@ -36,18 +36,13 @@ class VideoQRCodeScanner:
     #function for searching QR-Code in Frame
     def searchFrameForQR(self, frame):
         decodedObjects = pyzbar.decode(frame)
-        # log frame here
-        self.log.info('QR -  : searchFramForQR()')
         for obj in decodedObjects:
             # if QR-Code data is different last
-            self.log.info('11111111 QR - Type : ', self.lastQRContent)
-            self.log.info('QR - Type : ', self.lastQRContent)
             if(self.lastQRContent != obj.data):
                 self.lastQRContent = obj.data
-                #self.executorForCallback.submit(self.qrDetectedCallback)
-                self.log.info('QR - Type : ', obj.type)
-                self.log.info('QR - Data : ', obj.data,'\n')  
-                self.log.info("QR - QR detected: " + str(obj.data))
+                self.executorForCallback.submit(self.qrDetectedCallback)
+                self.log.debug('QR - Type : ' + obj.type)
+                self.log.debug('QR - Data : ' + str(obj.data))  
                 self.dataModel.QRcodeContent = obj.data
         decodedObjects = ""
     
@@ -58,5 +53,4 @@ class VideoQRCodeScanner:
         self.log.debug("QR - takePhoto()")
         _, frame = self.cap.read()
         cv2.imwrite('plantImage.png',frame)
-        self.log.debug("QR - takePhoto()")
         self.dataModel.plantImage = frame
