@@ -1,8 +1,6 @@
 import base64
 import requests
 import sys
-sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
-sys.path.insert(0, '/home/pi/Desktop/PREN/Button')
 sys.path.insert(0, '../Main_Model')
 sys.path.insert(0, '../Button')
 from Log import Logger
@@ -12,7 +10,7 @@ class PlantApiService:
         self.dataModel = dataModel
         self.plantIDkey = plantIDkey
         self.minProbability = minProbability
-        self.image_path = '/home/pi/plantImage.png'
+        self.image_path = '../Button/plantImage.png'
         self.log = Logger("PlantApiService")
         
     def detectPlant(self, firstPlantScanned):

@@ -1,5 +1,4 @@
 import serial.tools.list_ports
-sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
 sys.path.insert(0, '../Main_Model')
 from Log import Logger
 # This file helps you to find out, which Serial port is taken by a device.

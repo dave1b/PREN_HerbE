@@ -1,6 +1,5 @@
 import Tinyk22Con
 import sys
-sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
 sys.path.insert(0, '../Main_Model')
 from Log import Logger
 

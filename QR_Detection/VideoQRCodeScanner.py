@@ -1,10 +1,8 @@
 import sys
-import time
 import cv2
 import pyzbar.pyzbar as pyzbar
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
-sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
 sys.path.insert(0, '../Main_Model')
 from Log import Logger
 

@@ -1,5 +1,4 @@
 import sys
-sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
 sys.path.insert(0, '../Main_Model')
 from HerbE import HerbE
 from Log import Logger
@@ -22,7 +21,7 @@ class Button():
         executor.submit(self.startButtonListener)
 
     def startButtonListener(self):
-        while True: 
+        while True:
             if GPIO.input(16) == GPIO.HIGH and not self.startPressedBefore:
                 self.startPressedBefore = True
                 self.stopPressedBefore = False

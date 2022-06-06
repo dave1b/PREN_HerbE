@@ -8,12 +8,6 @@ import time
 import requests
 
 # Add paths
-sys.path.insert(0, '/home/pi/Desktop/PREN/Main_Model')
-sys.path.insert(0, '/home/pi/Desktop/PREN/Ultrasonic_Waterproof')
-sys.path.insert(0, '/home/pi/Desktop/PREN/QR_Detection')
-sys.path.insert(0, '/home/pi/Desktop/PREN/Plant_Detection')
-sys.path.insert(0, '/home/pi/Desktop/PREN/Tinyk22_Communication')
-
 sys.path.insert(0, '../Ultrasonic_Waterproof')
 sys.path.insert(0, '../QR_Detection')
 sys.path.insert(0, '../Plant_Detection')
@@ -21,13 +15,12 @@ sys.path.insert(0, '../Tinyk22_Communication')
 
 # import custom modules
 from DataModel import DataModel, HerbEstates
+from Log import Logger
 from Ultrasonic import Ultrasonic
 from VideoQRCodeScanner import VideoQRCodeScanner
 from PlantApiService import PlantApiService
 from Tinyk22Interface import Tinyk22Interface
 # from Tinyk22InterfaceFake import Tinyk22Interface
-from apiKeys import plantIDkey, restAPIKey
-from Log import Logger
 
 
 class HerbE:
@@ -40,16 +33,16 @@ class HerbE:
         self.restAPIKey = self.herbEConfig["restAPIKey"]
         self.RESTapiURL = self.herbEConfig["restAPIURL"]
         self.stopQRCodeContent = self.herbEConfig["qrContentOfFinish"]
-        self.startEngineAfterUltraDetectedThreshold = self.herbEConfig["afterUltraDetectedRestartHerbETimeInSeconds"]
+        self.startEngineAfterUltraDetectedThreshold = int(self.herbEConfig["afterUltraDetectedRestartHerbETimeInSeconds"])
         self.firstPlantScanned = False
         # instantiate components
         self.dataModel = DataModel()
         self.ultrasonic = Ultrasonic(
-            self.ultrasonicObjectDetected, self.herbEConfig["ultrasonicDistanceThresholdInMM"])
+            self.ultrasonicObjectDetected, int(self.herbEConfig["ultrasonicDistanceThresholdInMM"]))
         self.videoQRCodeScanner = VideoQRCodeScanner(
             self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(
-            self.plantIDKey, self.dataModel, self.herbEConfig["plantMinProbability"])
+            self.plantIDKey, self.dataModel, float(self.herbEConfig["plantMinProbability"]))
         self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback)
         self.log = Logger("HerbE")
         self.log.debug("HerbE instantiated")
@@ -111,7 +104,7 @@ class HerbE:
         if(self.dataModel.QRcodeContent == self.stopQRCodeContent):
             # if reached finish line -> shutdown in 5 seconds
             self.log.debug("finish has ben reached")
-            Timer(self.herbEConfig["shutdownAfterFinishQRcodeTimeInSeconds"], self.shutdownHerbE).start()
+            Timer(int(self.herbEConfig["shutdownAfterFinishQRcodeTimeInSeconds"]), self.shutdownHerbE).start()
             return
         self.videoQRCodeScanner.takePhoto()
         self.detectPlantInImage()
