@@ -8,10 +8,10 @@ import time
 import requests
 
 # Add paths
-sys.path.insert(0, '../Ultrasonic_Waterproof')
-sys.path.insert(0, '../QR_Detection')
-sys.path.insert(0, '../Plant_Detection')
-sys.path.insert(0, '../Tinyk22_Communication')
+sys.path.insert(0, 'Ultrasonic_Waterproof')
+sys.path.insert(0, 'QR_Detection')
+sys.path.insert(0, 'Plant_Detection')
+sys.path.insert(0, 'Tinyk22_Communication')
 
 # import custom modules
 from DataModel import DataModel, HerbEstates
@@ -21,7 +21,6 @@ from VideoQRCodeScanner import VideoQRCodeScanner
 from PlantApiService import PlantApiService
 from Tinyk22Interface import Tinyk22Interface
 # from Tinyk22InterfaceFake import Tinyk22Interface
-
 
 class HerbE:
     def __init__(self):

@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../Main_Model')
+sys.path.insert(0, 'Main_Model')
 from HerbE import HerbE
 from Log import Logger
 import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library

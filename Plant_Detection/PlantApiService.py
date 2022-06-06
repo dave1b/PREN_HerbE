@@ -1,8 +1,8 @@
 import base64
 import requests
 import sys
-sys.path.insert(0, '../Main_Model')
-sys.path.insert(0, '../Button')
+sys.path.insert(0, 'Main_Model')
+sys.path.insert(0, 'Button')
 from Log import Logger
 
 class PlantApiService:
