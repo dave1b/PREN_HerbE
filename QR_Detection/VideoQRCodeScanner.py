@@ -1,6 +1,7 @@
 import sys
 import cv2
 import pyzbar.pyzbar as pyzbar
+from pyzbar.pyzbar import ZBarSymbol
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 sys.path.insert(0, 'Main_Model')
@@ -33,7 +34,7 @@ class VideoQRCodeScanner:
 
     #function for searching QR-Code in Frame
     def searchFrameForQR(self, frame):
-        decodedObjects = pyzbar.decode(frame)
+        decodedObjects = pyzbar.decode(frame, symbols=[ZBarSymbol.QRCODE])
         for obj in decodedObjects:
             # if QR-Code data is different last
             if(self.dataModel.QRcodeContent != obj.data):
