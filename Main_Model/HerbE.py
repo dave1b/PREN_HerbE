@@ -33,22 +33,22 @@ class HerbE:
         self.RESTapiURL = self.herbEConfig["restAPIURL"]
         self.stopQRCodeContent = self.herbEConfig["qrContentOfFinish"]
         self.startEngineAfterUltraDetectedThreshold = int(self.herbEConfig["afterUltraDetectedRestartHerbETimeInSeconds"])
-        self.firstPlantScanned = False
         # instantiate components
         self.dataModel = DataModel()
         self.ultrasonic = Ultrasonic(
-            self.ultrasonicObjectDetected, int(self.herbEConfig["ultrasonicDistanceThresholdInMM"]))
+            self.ultrasonicObjectDetected, int(self.herbEConfig["ultrasonictimethresholdbetweeninseconds"]), int(self.herbEConfig["ultrasonicDistanceThresholdInMM"]))
         self.videoQRCodeScanner = VideoQRCodeScanner(
             self.qrCodeDetected, self.dataModel)
         self.plantApiService = PlantApiService(
             self.plantIDKey, self.dataModel, float(self.herbEConfig["plantMinProbability"]))
-        self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback, int(self.herbEConfig["distanceTimerInterval"]))
+        self.tinyk22Interface = Tinyk22Interface(self.newDistanceCallback, int(self.herbEConfig["getdistanceintervaltimeinseconds"]))
         self.log = Logger("HerbE")
         self.log.debug("HerbE instantiated")
         self.dataModel.state = HerbEstates["initial"]
         self.postDataToRestAPI()
 
     def initialStartOfHerbE(self):
+        self.firstPlantScanned = False
         self.dataModel.resetModel()
         self.tinyk22Interface.resetComponents()
         self.log.debug("initialStartOfHerbE()")

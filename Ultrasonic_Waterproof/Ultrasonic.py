@@ -7,8 +7,9 @@ from Log import Logger
 from DFRobotRaspberryPiA02YYUW import DFRobotA02Distance as UltrasonicSensor
 
 class Ultrasonic:
-    def __init__(self, objectDetectedCallback, distanceThreshold = 1000):
+    def __init__(self, objectDetectedCallback, minWaitingtimeBetweenAlerts, distanceThreshold = 1000):
         self.callbackObjectDetected = objectDetectedCallback
+        self.minWaitingtimeBetweenAlerts = minWaitingtimeBetweenAlerts
         self.ultrasonicSensor = UltrasonicSensor()
         self.ultrasonicSensor.set_dis_range(0, 4500)
         self.distanceThreshold = distanceThreshold
@@ -19,7 +20,6 @@ class Ultrasonic:
     
     def startSearching(self):
         self.lastUltrasonicAlertTimestamp = time.time()
-        self.minWaitingtimeBetweenAlerts = 12
         self.searchingRunning = True
         self.log.debug("startSearching()")
         while self.searchingRunning:
