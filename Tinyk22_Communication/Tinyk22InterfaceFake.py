@@ -8,9 +8,10 @@ class Tinyk22Interface:
         self.log = Logger("Tinyk22InterfaceFake")
         #self.ser = Tinyk22Con.getconnection()
         self.engineRunning = False
+        self.shutdown= False
         #self.engine = Engine(self.ser)
         self.distance = 0
-        self.distanceTimerInterval = 10
+        self.distanceTimerInterval = distanceTimerInterval
         self.thread = Timer(self.distanceTimerInterval, self.func_wrapper)
         self.newDistanceCallback = newDistanceCallback
 
@@ -32,7 +33,7 @@ class Tinyk22Interface:
 
     def func_wrapper(self):
         self.log.debug("func_wrapper()")
-        if(self.engineRunning):
+        if(self.engineRunning and not self.shutdown):
             self.log.debug("startIntervalTime() if(self.engineRunning)")
             self.receiveDistanceAndCallCallback()
             self.thread = Timer(self.distanceTimerInterval, self.func_wrapper)
@@ -52,4 +53,5 @@ class Tinyk22Interface:
         self.engineRunning = False
     
     def resetComponents(self):
+        self.shutdown = False
         self.engineRunning = False

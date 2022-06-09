@@ -1,3 +1,4 @@
+from logging import shutdown
 from Distance import Distance
 from Engine import Engine
 from Tinyk22Con import Tinyk22Con
@@ -12,6 +13,7 @@ class Tinyk22Interface:
     def __init__(self, newDistanceCallback, distanceTimerInterval):
         self.ser = Tinyk22Con.getconnection(self)
         self.engineRunning = False
+        self.shutdown= False
         self.engine = Engine(self.ser)
         self.distance = Distance(self.ser)
         self.timerInterval = distanceTimerInterval
@@ -33,6 +35,7 @@ class Tinyk22Interface:
     def shutdownEngine(self):
         self.log.debug("shutdownEngine: " + str(self.engine))
         self.engine.engineShutdown()
+        self.shutdown = True
         self.engineRunning = False
 
     def receiveDistanceAndCallCallback(self):
@@ -42,7 +45,7 @@ class Tinyk22Interface:
 
     def func_wrapper(self):
         self.log.debug("func_wrapper()")
-        if (self.engineRunning):
+        if (self.engineRunning and not self.shutdown):
             self.receiveDistanceAndCallCallback()
             self.thread = Timer(self.timerInterval, self.func_wrapper)
             if not (self.thread.is_alive()):
@@ -57,4 +60,5 @@ class Tinyk22Interface:
             self.thread.start()
     
     def resetComponents(self):
+        self.shutdown = False
         self.engine.resetEngine()
