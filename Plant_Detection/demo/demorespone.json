@@ -1,0 +1,141 @@
+{
+    "id": 45660282,
+    "custom_id": null,
+    "meta_data": {
+        "latitude": null,
+        "longitude": null,
+        "date": "2022-05-13",
+        "datetime": "2022-05-13"
+    },
+    "uploaded_datetime": 1652432922.819403,
+    "finished_datetime": 1652432923.344241,
+    "images": [
+        {
+            "file_name": "7c2a70903dae48cba5fa55fc72b93e9b.jpg",
+            "url": "https://plant.id/media/images/7c2a70903dae48cba5fa55fc72b93e9b.jpg"
+        }
+    ],
+    "suggestions": [
+        {
+            "id": 272565958,
+            "plant_name": "Tillandsia recurvata",
+            "plant_details": {
+                "common_names": null,
+                "language": "de",
+                "scientific_name": "Tillandsia recurvata",
+                "structured_name": {
+                    "genus": "tillandsia",
+                    "species": "recurvata"
+                }
+            },
+            "probability": 0.45754728526652455,
+            "confirmed": false
+        },
+        {
+            "id": 272565959,
+            "plant_name": "Tillandsia usneoides",
+            "plant_details": {
+                "common_names": [
+                    "Spanisches Moos",
+                    "Louisianamoos",
+                    "Spanish moss",
+                    "Greisenbart"
+                ],
+                "language": "de",
+                "scientific_name": "Tillandsia usneoides",
+                "structured_name": {
+                    "genus": "tillandsia",
+                    "species": "usneoides"
+                }
+            },
+            "probability": 0.12819294208107487,
+            "confirmed": false
+        },
+        {
+            "id": 272565960,
+            "plant_name": "Leucophyta brownii",
+            "plant_details": {
+                "common_names": null,
+                "language": "de",
+                "scientific_name": "Leucophyta brownii",
+                "structured_name": {
+                    "genus": "leucophyta",
+                    "species": "brownii"
+                }
+            },
+            "probability": 0.024644634477795795,
+            "confirmed": false
+        },
+        {
+            "id": 272565961,
+            "plant_name": "Usnea hirta",
+            "plant_details": {
+                "common_names": null,
+                "language": "de",
+                "scientific_name": "Usnea hirta",
+                "structured_name": {
+                    "genus": "usnea",
+                    "species": "hirta"
+                }
+            },
+            "probability": 0.02097823650897668,
+            "confirmed": false
+        },
+        {
+            "id": 272565962,
+            "plant_name": "Astrophytum capricorne",
+            "plant_details": {
+                "common_names": null,
+                "language": "de",
+                "scientific_name": "Astrophytum capricorne",
+                "structured_name": {
+                    "genus": "astrophytum",
+                    "species": "capricorne"
+                }
+            },
+            "probability": 0.020548331836437977,
+            "confirmed": false
+        },
+        {
+            "id": 272565963,
+            "plant_name": "Usnea strigosa",
+            "plant_details": {
+                "common_names": null,
+                "language": "de",
+                "scientific_name": "Usnea strigosa",
+                "structured_name": {
+                    "genus": "usnea",
+                    "species": "strigosa"
+                }
+            },
+            "probability": 0.015410755808141352,
+            "confirmed": false
+        },
+        {
+            "id": 272565964,
+            "plant_name": "Salvia rosmarinus",
+            "plant_details": {
+                "common_names": [
+                    "Rosmarin"
+                ],
+                "language": "de",
+                "scientific_name": "Salvia rosmarinus",
+                "structured_name": {
+                    "genus": "salvia",
+                    "species": "rosmarinus"
+                }
+            },
+            "probability": 0.014812441196318167,
+            "confirmed": false
+        }
+    ],
+    "modifiers": [
+        "crops_medium"
+    ],
+    "secret": "UHrImZf6fsFi1xp",
+    "fail_cause": null,
+    "countable": true,
+    "feedback": null,
+    "is_plant_probability": 0.2747683995888888,
+    "is_plant": false
+}
