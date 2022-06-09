@@ -74,14 +74,13 @@ class PlantApiService:
     
     def findMatchingPlantInDataModel(self):
         self.log.debug("findMatchingPlantInDataModel()")
-        
         # check if matching plants in lists
         matchingPlantList = list(set(self.dataModel.recognisedPlantsList1) & set(self.dataModel.recognisedPlantsListx))
         
         if(len(matchingPlantList) > 0):
         # if there is a match write to DataModel
-            self.log.debug("There is a match: ", True)
-            self.log.debug("The matching plant type is: ", matchingPlantList[0])
+            self.log.debug("There is a match: True")
+            self.log.debug("The matching plant type is: " + matchingPlantList[0])
             self.dataModel.plantMatchPosition = self.dataModel.amountOfPlantxScanned
             return True
         else:
