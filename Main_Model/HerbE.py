@@ -81,8 +81,8 @@ class HerbE:
         if not (self.firstPlantScanned):
             self.firstPlantScanned = True
         else:
-            self.dataModel.amountOfPlantxScanned += 1
             self.findMatchingPlant()
+            self.dataModel.amountOfPlantxScanned += 1
         self.postDataToRestAPI()
         self.startEngine()
 
